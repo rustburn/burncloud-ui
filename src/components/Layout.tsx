@@ -1,67 +1,71 @@
-import React from 'react';
-import { NavLink, useLocation, Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import React, { useState } from 'react';
+import { NavLink, useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Waypoints,
-  Cpu,
-  ServerCrash,
+  Terminal,
+  Store,
   Key,
-  Users,
-  Activity,
-  ScrollText,
   LineChart,
-  ShieldAlert,
   CreditCard,
+  ScrollText,
+  Server,
+  Layers,
+  Coins,
+  Receipt,
+  ShieldCheck,
   Settings,
+  Cpu,
+  Gauge,
+  TrendingUp,
+  Boxes,
+  Users,
+  Building2,
+  Workflow,
+  Search,
   Bell,
   HelpCircle,
-  Search,
-  Terminal,
   Globe,
-  LogOut
+  ChevronDown,
+  Sparkles,
+  Zap,
+  Shield,
+  Sliders,
+  DollarSign
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Logo } from './Logo';
+import { useRole, UserRole } from '@/context/RoleContext';
+import { BCBadge, BCButton } from './ui';
 
-const NAV_GROUPS = [
-  {
-    title: 'Core Platform',
-    items: [
-      { name: 'Overview', path: '/', icon: LayoutDashboard },
-      { name: 'Playground', path: '/playground', icon: Terminal },
-      { name: 'Routes', path: '/routes', icon: Waypoints },
-      { name: 'Models', path: '/models', icon: Cpu },
-      { name: 'Providers', path: '/providers', icon: ServerCrash },
-    ]
-  },
-  {
-    title: 'Access & Control',
-    items: [
-      { name: 'API Keys', path: '/keys', icon: Key },
-      { name: 'Customers', path: '/customers', icon: Users },
-      { name: 'Guardrails', path: '/guardrails', icon: ShieldAlert },
-    ]
-  },
-  {
-    title: 'Ops & Finance',
-    items: [
-      { name: 'Logs', path: '/logs', icon: ScrollText },
-      { name: 'Evaluation', path: '/evaluation', icon: LineChart },
-      { name: 'Billing', path: '/billing', icon: CreditCard },
-    ]
-  },
-  {
-    title: 'System',
-    items: [
-      { name: 'Team', path: '/team', icon: Users },
-      { name: 'Settings', path: '/settings', icon: Settings },
-    ]
-  }
-];
+interface NavItem {
+  name: string;
+  path: string;
+  icon: React.ElementType;
+  badge?: string;
+}
+
+interface NavSection {
+  title?: string;
+  items: NavItem[];
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const {
+    role,
+    setRole,
+    balance,
+    todaySpend,
+    supplierEarningsToday,
+    adminRevenueToday,
+    notificationsCount,
+    searchQuery,
+    setSearchQuery
+  } = useRole();
+
+  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
+  const [quickTopUpOpen, setQuickTopUpOpen] = useState(false);
 
   const isPublicPage = ['/home', '/landing', '/login', '/register'].includes(location.pathname);
 
@@ -69,127 +73,336 @@ export function Layout({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  const getPageTitle = () => {
-    for (const group of NAV_GROUPS) {
-      const item = group.items.find(n => n.path === location.pathname);
-      if (item) return item.name;
+  // 1. Role-specific Navigation Groups
+  const buyerNavSections: NavSection[] = [
+    {
+      items: [
+        { name: 'Overview', path: '/buyer/overview', icon: LayoutDashboard },
+        { name: 'Playground', path: '/buyer/playground', icon: Terminal, badge: 'Live' },
+        { name: 'Marketplace', path: '/buyer/marketplace', icon: Store },
+        { name: 'API Keys', path: '/buyer/api-keys', icon: Key },
+        { name: 'Usage', path: '/buyer/usage', icon: LineChart },
+        { name: 'Billing', path: '/buyer/billing', icon: CreditCard },
+        { name: 'Logs', path: '/buyer/logs', icon: ScrollText },
+      ]
     }
-    return 'BurnCloud';
+  ];
+
+  const supplierNavSections: NavSection[] = [
+    {
+      items: [
+        { name: 'Overview', path: '/supplier/overview', icon: LayoutDashboard },
+        { name: 'Resources', path: '/supplier/resources', icon: Server, badge: '4 Nodes' },
+        { name: 'Deployments', path: '/supplier/deployments', icon: Layers },
+        { name: 'Earnings', path: '/supplier/earnings', icon: Coins },
+        { name: 'Settlements', path: '/supplier/settlements', icon: Receipt },
+        { name: 'Reliability', path: '/supplier/reliability', icon: ShieldCheck },
+        { name: 'Settings', path: '/supplier/settings', icon: Settings },
+      ]
+    }
+  ];
+
+  const adminNavSections: NavSection[] = [
+    {
+      title: 'Platform Command',
+      items: [
+        { name: 'Overview', path: '/admin/overview', icon: LayoutDashboard },
+        { name: 'Supply', path: '/admin/supply', icon: Server },
+        { name: 'Capacity', path: '/admin/capacity', icon: Gauge, badge: 'Auto' },
+        { name: 'Demand', path: '/admin/demand', icon: TrendingUp },
+        { name: 'Models', path: '/admin/models', icon: Cpu },
+      ]
+    },
+    {
+      title: 'Economics & Ops',
+      items: [
+        { name: 'Revenue', path: '/admin/revenue', icon: DollarSign },
+        { name: 'Settlements', path: '/admin/settlements', icon: Receipt },
+        { name: 'Suppliers', path: '/admin/suppliers', icon: Building2 },
+        { name: 'Customers', path: '/admin/customers', icon: Users },
+        { name: 'Operations', path: '/admin/operations', icon: Workflow, badge: 'Autopilot' },
+        { name: 'Settings', path: '/admin/settings', icon: Settings },
+      ]
+    }
+  ];
+
+  const currentNavSections =
+    role === 'buyer'
+      ? buyerNavSections
+      : role === 'supplier'
+      ? supplierNavSections
+      : adminNavSections;
+
+  const roleMeta = {
+    buyer: {
+      label: 'Buyer',
+      subtext: 'Model API Consumer',
+      color: 'bg-emerald-500',
+      badgeColor: 'success' as const,
+      metricLabel: 'Balance',
+      metricValue: `$${balance.toFixed(2)}`,
+    },
+    supplier: {
+      label: 'Supplier',
+      subtext: 'GPU Compute Node Host',
+      color: 'bg-indigo-500',
+      badgeColor: 'accent' as const,
+      metricLabel: 'Today Earnings',
+      metricValue: `$${supplierEarningsToday.toFixed(2)}`,
+    },
+    admin: {
+      label: 'Admin',
+      subtext: 'Platform Command Center',
+      color: 'bg-amber-500',
+      badgeColor: 'warning' as const,
+      metricLabel: 'Platform GMV',
+      metricValue: `$${adminRevenueToday.toLocaleString()}`,
+    }
   };
 
   return (
-    <div className="flex h-screen bg-[#F9FAFB] overflow-hidden">
+    <div className="flex h-screen bg-[#F9FAFB] text-gray-900 overflow-hidden font-sans select-none">
       {/* Sidebar */}
-      <aside className="w-[240px] flex flex-col border-r border-gray-200 bg-[#F9FAFB] flex-shrink-0">
-        <div className="h-16 flex items-center justify-between px-6 border-b border-transparent">
-          <Link to="/" className="flex items-center gap-3 text-gray-900">
-            <Logo className="w-7 h-7" />
-            <span className="font-display font-bold tracking-tight text-[18px] text-gray-900">BurnCloud</span>
-          </Link>
-        </div>
+      <aside className="w-[230px] flex flex-col border-r border-gray-200/90 bg-[#F9FAFB] flex-shrink-0">
+        {/* Brand & Role Switcher */}
+        <div className="p-3 border-b border-gray-200/70">
+          <div className="relative">
+            <button
+              onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
+              className="w-full flex items-center justify-between p-2 rounded-xl bg-white border border-gray-200/90 hover:border-gray-300 shadow-xs transition-all text-left group"
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Logo className="w-6 h-6 flex-shrink-0" />
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-[13px] tracking-tight text-gray-950">BurnCloud</span>
+                    <span className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0", roleMeta[role].color)} />
+                  </div>
+                  <div className="text-[11px] font-mono font-medium text-gray-500 truncate flex items-center gap-1">
+                    <span>{roleMeta[role].label}</span>
+                    <span className="text-[9px] text-gray-400">• Workspace</span>
+                  </div>
+                </div>
+              </div>
+              <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-gray-700 transition-colors flex-shrink-0" />
+            </button>
 
-        <nav className="flex-1 overflow-y-auto py-2 px-3 space-y-5">
-          {NAV_GROUPS.map((group) => (
-            <div key={group.title} className="space-y-1">
-              <h4 className="px-3 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">{group.title}</h4>
-              <div className="space-y-0.5">
-                {group.items.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  const Icon = item.icon;
-                  return (
-                    <NavLink
-                      key={item.name}
-                      to={item.path}
+            {/* Role Dropdown */}
+            {roleDropdownOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setRoleDropdownOpen(false)}
+                />
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl z-40 p-1.5 space-y-1">
+                  <div className="px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400">
+                    Switch Workspace Role
+                  </div>
+                  {(['buyer', 'supplier', 'admin'] as UserRole[]).map((r) => (
+                    <button
+                      key={r}
+                      onClick={() => {
+                        setRole(r);
+                        setRoleDropdownOpen(false);
+                      }}
                       className={cn(
-                        "relative flex items-center gap-3 px-3 py-1.5 text-[13px] rounded-lg transition-all group",
-                        isActive 
-                          ? "text-gray-900 font-medium bg-black/[0.04]" 
-                          : "text-gray-500 hover:text-gray-900 hover:bg-black/[0.02]"
+                        "w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors text-left",
+                        role === r
+                          ? "bg-gray-900 text-white font-medium shadow-xs"
+                          : "text-gray-700 hover:bg-gray-100"
                       )}
                     >
-                      <Icon className={cn("w-[16px] h-[16px] transition-colors", isActive ? "text-gray-900" : "text-gray-400 group-hover:text-gray-600")} />
-                      {item.name}
-                    </NavLink>
-                  );
-                })}
-              </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            "w-2 h-2 rounded-full",
+                            roleMeta[r].color
+                          )}
+                        />
+                        <div>
+                          <div className="font-semibold">{roleMeta[r].label}</div>
+                          <div className={cn("text-[10px]", role === r ? "text-gray-300" : "text-gray-400")}>
+                            {roleMeta[r].subtext}
+                          </div>
+                        </div>
+                      </div>
+                      {role === r && (
+                        <span className="text-[10px] font-mono uppercase bg-white/20 px-1.5 py-0.5 rounded">
+                          Active
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Mental Model Banner Tag */}
+        <div className="px-4 py-2 border-b border-gray-200/50 bg-gray-100/40">
+          <div className="text-[10px] font-mono text-gray-500 uppercase tracking-wider">
+            {role === 'buyer' && 'Model → API → Usage → Billing'}
+            {role === 'supplier' && 'GPU → Health → Contribution → Earnings'}
+            {role === 'admin' && 'Supply → Capacity → Demand → Economics'}
+          </div>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="flex-1 overflow-y-auto p-2.5 space-y-4">
+          {currentNavSections.map((section, idx) => (
+            <div key={idx} className="space-y-0.5">
+              {section.title && (
+                <div className="px-3 pt-2 pb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400">
+                  {section.title}
+                </div>
+              )}
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname.startsWith(item.path);
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all group",
+                      isActive
+                        ? "bg-gray-900 text-white shadow-xs"
+                        : "text-gray-600 hover:text-gray-950 hover:bg-gray-200/60"
+                    )}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon
+                        className={cn(
+                          "w-4 h-4 transition-colors",
+                          isActive ? "text-white" : "text-gray-400 group-hover:text-gray-700"
+                        )}
+                      />
+                      <span>{item.name}</span>
+                    </div>
+                    {item.badge && (
+                      <span
+                        className={cn(
+                          "text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider",
+                          isActive
+                            ? "bg-white/20 text-white"
+                            : "bg-gray-200 text-gray-700 group-hover:bg-gray-300"
+                        )}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </NavLink>
+                );
+              })}
             </div>
           ))}
+        </nav>
 
-          {/* Quick External Links in Sidebar */}
-          <div className="pt-3 border-t border-gray-200/60 space-y-1">
-            <h4 className="px-3 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Public Portal</h4>
+        {/* Sidebar Footer */}
+        <div className="p-3 border-t border-gray-200/80 bg-white/60 space-y-2">
+          {/* Role Status Summary */}
+          <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-200/70 space-y-1">
+            <div className="text-[10px] font-mono font-semibold uppercase text-gray-400">
+              {roleMeta[role].metricLabel}
+            </div>
+            <div className="flex items-baseline justify-between">
+              <span className="font-mono font-bold text-sm text-gray-950">
+                {roleMeta[role].metricValue}
+              </span>
+              {role === 'buyer' && (
+                <button
+                  onClick={() => navigate('/buyer/billing')}
+                  className="text-[10px] font-bold text-blue-600 hover:text-blue-700 font-mono hover:underline"
+                >
+                  + Top Up
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-xs px-1 text-gray-500">
             <Link
               to="/home"
-              className="flex items-center gap-3 px-3 py-1.5 text-[13px] rounded-lg text-gray-500 hover:text-gray-900 hover:bg-black/[0.02] transition-all group"
+              className="flex items-center gap-1 hover:text-gray-900 transition-colors text-[11px]"
             >
-              <Globe className="w-[16px] h-[16px] text-gray-400 group-hover:text-gray-600" />
-              Landing Page
+              <Globe className="w-3.5 h-3.5" />
+              <span>Public Portal</span>
             </Link>
-            <Link
-              to="/login"
-              className="flex items-center gap-3 px-3 py-1.5 text-[13px] rounded-lg text-gray-500 hover:text-gray-900 hover:bg-black/[0.02] transition-all group"
-            >
-              <LogOut className="w-[16px] h-[16px] text-gray-400 group-hover:text-gray-600" />
-              Sign Out / Login
-            </Link>
+            <span className="text-[10px] font-mono text-emerald-600 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              SLA 99.99%
+            </span>
           </div>
-        </nav>
+        </div>
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Topbar */}
-        <header className="h-16 flex items-center justify-between px-8 border-b border-gray-200/60 bg-white/70 backdrop-blur-md z-10 flex-shrink-0">
-          <h1 className="text-[18px] font-display font-semibold text-gray-900 tracking-tight">{getPageTitle()}</h1>
-          
-          <div className="flex items-center gap-6">
-            <div className="relative w-72">
-              <Search className="w-[15px] h-[15px] absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input 
-                type="text" 
-                placeholder="Search routes, keys, logs..." 
-                className="w-full h-9 bg-gray-100/80 border border-transparent rounded-[10px] pl-9 pr-4 text-[13px] focus:bg-white focus:ring-1 focus:ring-gray-300 focus:border-gray-300 focus:shadow-sm transition-all placeholder:text-gray-400 focus:outline-none"
+      {/* Main App Container */}
+      <div className="flex-1 flex flex-col min-w-0 bg-[#F9FAFB]">
+        {/* Top Header */}
+        <header className="h-14 bg-white border-b border-gray-200/90 px-6 flex items-center justify-between z-10 flex-shrink-0">
+          {/* Left: Global Search & Breadcrumb */}
+          <div className="flex items-center gap-4 flex-1 max-w-xl">
+            <div className="relative w-full max-w-md">
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={
+                  role === 'buyer'
+                    ? "Search models, API keys, logs..."
+                    : role === 'supplier'
+                    ? "Search GPU nodes, clusters, payouts..."
+                    : "Search models, capacity, suppliers, demand..."
+                }
+                className="w-full h-8 pl-8 pr-3 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200/80 rounded-xl text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all font-sans"
               />
             </div>
-            
-            <div className="flex items-center gap-4">
-              <Link to="/home" className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition-colors">
-                <Globe className="w-3.5 h-3.5 text-gray-500" />
-                <span>Visit Landing Page</span>
-              </Link>
+          </div>
 
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700 cursor-pointer hover:bg-gray-200 transition-colors">
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                Production
-                <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-3">
+            {/* Live Autopilot Status */}
+            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-gray-50 border border-gray-200/80 rounded-lg text-xs font-mono text-gray-700">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="text-[11px] font-semibold text-gray-800">Autopilot Active</span>
+            </div>
+
+            {/* Needs Attention / Notification */}
+            <button
+              onClick={() => {
+                if (role === 'buyer') navigate('/buyer/overview#attention');
+                else if (role === 'supplier') navigate('/supplier/overview#attention');
+                else navigate('/admin/overview#attention');
+              }}
+              className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Needs Attention Alerts"
+            >
+              <Bell className="w-4 h-4" />
+              {notificationsCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white" />
+              )}
+            </button>
+
+            <div className="h-4 w-px bg-gray-200 mx-1" />
+
+            {/* Profile Avatar */}
+            <div className="flex items-center gap-2 pl-1">
+              <div className="w-7 h-7 rounded-full bg-gray-900 text-white font-mono font-bold text-xs flex items-center justify-center shadow-xs">
+                {role === 'buyer' ? 'BY' : role === 'supplier' ? 'SP' : 'AD'}
               </div>
-              
-              <div className="flex items-center gap-3 text-gray-400">
-                <button className="hover:text-gray-600 transition-colors relative">
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-                </button>
-                <button className="hover:text-gray-600 transition-colors">
-                  <HelpCircle className="w-5 h-5" />
-                </button>
+              <div className="hidden md:block text-left">
+                <div className="text-xs font-semibold text-gray-900 leading-none">burncloud.com</div>
+                <div className="text-[10px] font-mono text-gray-500 leading-tight capitalize">{role} Account</div>
               </div>
-              
-              <div className="h-6 w-px bg-gray-200 mx-1"></div>
-              
-              <Link to="/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-gray-700 to-gray-900 flex items-center justify-center text-white text-xs font-medium shadow-sm">
-                  WH
-                </div>
-                <span className="text-sm font-medium text-gray-700 hidden md:block">BurnCloud AI</span>
-              </Link>
             </div>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-8">
-          <div className="max-w-7xl mx-auto">
+        {/* Page Content Viewport */}
+        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+          <div className="max-w-7xl mx-auto space-y-6">
             {children}
           </div>
         </main>
