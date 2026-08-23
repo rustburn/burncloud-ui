@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import {
-  Key,
   Plus,
   Copy,
   Check,
-  Trash2,
-  ShieldAlert,
-  Sliders,
-  AlertCircle,
-  Eye,
-  EyeOff
+  AlertCircle
 } from 'lucide-react';
 import {
   BCPageHeader,
@@ -20,8 +14,10 @@ import {
   BCInput
 } from '@/components/ui';
 import { MOCK_BUYER_KEYS, BuyerApiKey } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function BuyerAPIKeys() {
+  const { t } = useTranslation();
   const [keys, setKeys] = useState<BuyerApiKey[]>(MOCK_BUYER_KEYS);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isKeyResultModalOpen, setIsKeyResultModalOpen] = useState(false);
@@ -66,10 +62,10 @@ export function BuyerAPIKeys() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="API Keys"
-        subtitle="Manage secret credentials for programmatic access to BurnCloud model endpoints."
+        title={t.buyer.apiKeys.title}
+        subtitle={t.buyer.apiKeys.subtitle}
         conclusion={{
-          text: "API keys allow zero-leak hardware-attested token generation. Keep your secrets secure.",
+          text: t.buyer.apiKeys.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -79,7 +75,7 @@ export function BuyerAPIKeys() {
             onClick={() => setIsCreateModalOpen(true)}
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Create New API Key</span>
+            <span>{t.buyer.apiKeys.createKeyBtn}</span>
           </BCButton>
         }
       />
@@ -88,11 +84,11 @@ export function BuyerAPIKeys() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Active API Keys</h3>
-            <p className="text-xs text-gray-500">Each key can have granular spend caps and rate limit policies.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.buyer.apiKeys.title}</h3>
+            <p className="text-xs text-gray-500">{t.buyer.apiKeys.subtitle}</p>
           </div>
           <span className="text-xs font-mono text-gray-400">
-            {keys.filter(k => k.status === 'Active').length} Active
+            {keys.filter(k => k.status === 'Active').length} {t.common.active}
           </span>
         </div>
 
@@ -100,13 +96,13 @@ export function BuyerAPIKeys() {
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Key Identifier</th>
-                <th className="pb-3 font-semibold">Secret Prefix</th>
-                <th className="pb-3 font-semibold">Rate Limit</th>
-                <th className="pb-3 font-semibold">Monthly Spend / Cap</th>
-                <th className="pb-3 font-semibold">Last Used</th>
-                <th className="pb-3 font-semibold">Status</th>
-                <th className="pb-3 font-semibold text-right">Action</th>
+                <th className="pb-3 font-semibold">{t.buyer.apiKeys.colKeyName}</th>
+                <th className="pb-3 font-semibold">{t.buyer.apiKeys.colKeySecret}</th>
+                <th className="pb-3 font-semibold">{t.buyer.apiKeys.colRateLimit}</th>
+                <th className="pb-3 font-semibold">{t.buyer.apiKeys.colSpendCap}</th>
+                <th className="pb-3 font-semibold">{t.buyer.apiKeys.colLastUsed}</th>
+                <th className="pb-3 font-semibold">{t.common.status}</th>
+                <th className="pb-3 font-semibold text-right">{t.buyer.apiKeys.colActions}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -114,7 +110,7 @@ export function BuyerAPIKeys() {
                 <tr key={k.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-medium text-gray-950">
                     <div className="font-semibold text-gray-900">{k.name}</div>
-                    <div className="text-[10px] font-mono text-gray-400">Created: {k.created}</div>
+                    <div className="text-[10px] font-mono text-gray-400">{t.buyer.apiKeys.colCreatedAt}: {k.created}</div>
                   </td>
                   <td className="py-3.5 font-mono text-gray-600">{k.maskedKey}</td>
                   <td className="py-3.5 font-mono text-gray-700">{k.rateLimitRpm} req/min</td>
@@ -130,16 +126,16 @@ export function BuyerAPIKeys() {
                   <td className="py-3.5 font-mono text-gray-500">{k.lastUsed}</td>
                   <td className="py-3.5">
                     <BCBadge variant={k.status === 'Active' ? 'success' : 'error'} size="sm">
-                      {k.status}
+                      {k.status === 'Active' ? t.common.active : t.buyer.apiKeys.revoked}
                     </BCBadge>
                   </td>
                   <td className="py-3.5 text-right">
                     {k.status === 'Active' && (
                       <button
                         onClick={() => handleRevokeKey(k.id)}
-                        className="text-xs text-rose-600 hover:text-rose-800 font-medium hover:underline font-mono"
+                        className="text-xs text-rose-600 hover:text-rose-800 font-medium hover:underline font-mono cursor-pointer"
                       >
-                        Revoke
+                        {t.buyer.apiKeys.revoke}
                       </button>
                     )}
                   </td>
@@ -154,12 +150,12 @@ export function BuyerAPIKeys() {
       <BCModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        title="Create New API Key"
-        subtitle="Generate a fresh bearer token for inference requests."
+        title={t.buyer.apiKeys.modalTitle}
+        subtitle={t.buyer.apiKeys.modalDesc}
       >
         <form onSubmit={handleCreateKey} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-gray-700">Key Name / Description</label>
+            <label className="text-xs font-semibold text-gray-700">{t.buyer.apiKeys.inputKeyName}</label>
             <BCInput
               type="text"
               placeholder="e.g. Production Cluster (US-East)"
@@ -171,7 +167,7 @@ export function BuyerAPIKeys() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-700">Rate Limit (req/min)</label>
+              <label className="text-xs font-semibold text-gray-700">{t.buyer.apiKeys.colRateLimit}</label>
               <BCInput
                 type="number"
                 value={newKeyRateLimit}
@@ -181,7 +177,7 @@ export function BuyerAPIKeys() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-700">Monthly Spend Cap ($)</label>
+              <label className="text-xs font-semibold text-gray-700">{t.buyer.apiKeys.inputSpendCap}</label>
               <BCInput
                 type="number"
                 value={newKeyCap}
@@ -199,10 +195,10 @@ export function BuyerAPIKeys() {
               size="sm"
               onClick={() => setIsCreateModalOpen(false)}
             >
-              Cancel
+              {t.common.cancel}
             </BCButton>
             <BCButton type="submit" variant="primary" size="sm">
-              Generate Key
+              {t.buyer.apiKeys.createKeyBtn}
             </BCButton>
           </div>
         </form>
@@ -212,13 +208,13 @@ export function BuyerAPIKeys() {
       <BCModal
         isOpen={isKeyResultModalOpen}
         onClose={() => setIsKeyResultModalOpen(false)}
-        title="API Key Created"
-        subtitle="Please copy your secret key now. You will not be able to view it again."
+        title={t.buyer.apiKeys.modalTitle}
+        subtitle={t.buyer.apiKeys.secretRevealNotice}
       >
         <div className="space-y-4">
           <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
             <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-            <p>For your security, BurnCloud does not store raw API keys. If you lose this key, you must create a new one.</p>
+            <p>{t.buyer.apiKeys.secretRevealNotice}</p>
           </div>
 
           <div className="p-3 bg-gray-950 rounded-xl flex items-center justify-between text-xs font-mono text-emerald-400">
@@ -233,7 +229,7 @@ export function BuyerAPIKeys() {
               }}
             >
               {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-              <span>{copied ? 'Copied' : 'Copy'}</span>
+              <span>{copied ? t.common.copied : t.common.copy}</span>
             </BCButton>
           </div>
 
@@ -243,7 +239,7 @@ export function BuyerAPIKeys() {
               size="sm"
               onClick={() => setIsKeyResultModalOpen(false)}
             >
-              Done
+              {t.buyer.apiKeys.copyAndClose}
             </BCButton>
           </div>
         </div>

@@ -1,22 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Search,
-  SlidersHorizontal,
-  Sparkles,
-  Zap,
-  CheckCircle2,
   ArrowRight,
-  ShieldCheck,
-  Cpu,
   Terminal,
   Activity,
-  Layers,
   ChevronDown,
-  ChevronUp,
-  BarChart3,
-  Globe2,
-  Info
+  ChevronUp
 } from 'lucide-react';
 import {
   BCPageHeader,
@@ -28,16 +17,24 @@ import {
   BCSearch
 } from '@/components/ui';
 import { WORKBENCH_MODELS, ModelItem } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function BuyerMarketplace() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedModel, setSelectedModel] = useState<ModelItem | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const categories = ['All', 'General LLM', 'Reasoning & Math', 'Coding', 'Low Latency'];
+  const categories = [
+    { key: 'All', label: t.buyer.marketplace.catAll },
+    { key: 'General LLM', label: t.buyer.marketplace.catGeneral },
+    { key: 'Reasoning & Math', label: t.buyer.marketplace.catReasoning },
+    { key: 'Coding', label: t.buyer.marketplace.catCoding },
+    { key: 'Low Latency', label: t.buyer.marketplace.catLowLatency }
+  ];
 
   const filteredModels = WORKBENCH_MODELS.filter((m) => {
     const matchesSearch =
@@ -58,10 +55,10 @@ export function BuyerMarketplace() {
     <div className="space-y-6">
       {/* 1. Page Header */}
       <BCPageHeader
-        title="Model Marketplace"
-        subtitle="Discover, benchmark, and deploy enterprise-grade frontier LLM capacities with pass-through pricing."
+        title={t.buyer.marketplace.title}
+        subtitle={t.buyer.marketplace.subtitle}
         conclusion={{
-          text: "All models backed by multi-region hardware attestation and sub-150ms automatic failovers.",
+          text: t.buyer.marketplace.conclusion,
           type: 'healthy'
         }}
       />
@@ -72,15 +69,15 @@ export function BuyerMarketplace() {
         <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
+              key={cat.key}
+              onClick={() => setSelectedCategory(cat.key)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
-                selectedCategory === cat
+                selectedCategory === cat.key
                   ? 'bg-gray-900 text-white font-bold shadow-xs'
                   : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200/80'
               }`}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -90,7 +87,7 @@ export function BuyerMarketplace() {
           <BCSearch
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search models (DeepSeek, Claude...)"
+            placeholder={t.buyer.marketplace.searchPlaceholder}
           />
         </div>
       </div>
@@ -123,11 +120,11 @@ export function BuyerMarketplace() {
               {/* Price & Context Strip */}
               <div className="p-3 rounded-xl bg-gray-50/80 border border-gray-100 flex items-center justify-between font-mono text-xs">
                 <div>
-                  <span className="text-[10px] text-gray-400 block uppercase">TOKEN RATE</span>
+                  <span className="text-[10px] text-gray-400 block uppercase">{t.buyer.marketplace.inputPrice} / {t.buyer.marketplace.outputPrice}</span>
                   <span className="font-bold text-gray-900">
                     ${model.inputPrice1M} <span className="text-gray-400 font-normal">/</span> ${model.outputPrice1M}
                   </span>
-                  <span className="text-[9px] text-gray-400 block">per 1M in / out</span>
+                  <span className="text-[9px] text-gray-400 block">{t.buyer.marketplace.perMillionTokens}</span>
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-gray-400 block uppercase">CONTEXT</span>
@@ -139,13 +136,13 @@ export function BuyerMarketplace() {
               {/* Tier Pills */}
               <div className="flex items-center gap-1.5 pt-1">
                 <span className="text-[10px] font-mono text-gray-400 uppercase">TIERS:</span>
-                {model.supportedTiers.map((t) => (
+                {model.supportedTiers.map((tTier) => (
                   <BCBadge
-                    key={t}
-                    variant={t === 'Performance' ? 'accent' : t === 'Standard' ? 'neutral' : 'brand'}
+                    key={tTier}
+                    variant={tTier === 'Performance' ? 'accent' : tTier === 'Standard' ? 'neutral' : 'brand'}
                     size="sm"
                   >
-                    {t}
+                    {tTier}
                   </BCBadge>
                 ))}
               </div>
@@ -155,9 +152,9 @@ export function BuyerMarketplace() {
             <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
               <button
                 onClick={() => handleOpenDetail(model)}
-                className="text-xs text-gray-600 hover:text-gray-950 font-medium hover:underline flex items-center gap-1"
+                className="text-xs text-gray-600 hover:text-gray-950 font-medium hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <span>Inspect Specs</span>
+                <span>{t.buyer.marketplace.viewDetails}</span>
               </button>
 
               <BCButton
@@ -167,7 +164,7 @@ export function BuyerMarketplace() {
                   navigate('/buyer/playground');
                 }}
               >
-                <span>Use Model</span>
+                <span>{t.buyer.marketplace.testInPlayground}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </BCButton>
             </div>
@@ -175,7 +172,7 @@ export function BuyerMarketplace() {
         ))}
       </div>
 
-      {/* 4. Model Detail Drawer (Apple/Stripe Restrained) */}
+      {/* 4. Model Detail Drawer */}
       {selectedModel && (
         <BCDrawer
           isOpen={isDrawerOpen}
@@ -187,7 +184,7 @@ export function BuyerMarketplace() {
             {/* Overview */}
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-gray-900 uppercase font-mono tracking-wider">
-                Model Overview
+                {t.buyer.marketplace.drawerSpecs}
               </h4>
               <p className="text-xs text-gray-700 leading-relaxed">{selectedModel.description}</p>
             </div>
@@ -196,24 +193,24 @@ export function BuyerMarketplace() {
             <div className="p-4 bg-gray-50 rounded-xl border border-gray-200/70 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-gray-900 font-mono">
-                  BurnCloud Pass-Through Rate
+                  BurnCloud Direct Rate
                 </span>
-                <BCBadge variant="success" size="sm">ZERO MARKUP</BCBadge>
+                <BCBadge variant="success" size="sm">0% MARKUP</BCBadge>
               </div>
               <div className="grid grid-cols-2 gap-3 pt-2 text-xs font-mono">
                 <div>
-                  <span className="text-gray-500 text-[11px] block">Input Prompt Rate</span>
+                  <span className="text-gray-500 text-[11px] block">{t.buyer.marketplace.inputPrice}</span>
                   <span className="text-base font-bold text-gray-950">
                     ${selectedModel.inputPrice1M.toFixed(2)}
                   </span>
-                  <span className="text-[10px] text-gray-400 block">per 1,000,000 tokens</span>
+                  <span className="text-[10px] text-gray-400 block">{t.buyer.marketplace.perMillionTokens}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-[11px] block">Completion Rate</span>
+                  <span className="text-gray-500 text-[11px] block">{t.buyer.marketplace.outputPrice}</span>
                   <span className="text-base font-bold text-gray-950">
                     ${selectedModel.outputPrice1M.toFixed(2)}
                   </span>
-                  <span className="text-[10px] text-gray-400 block">per 1,000,000 tokens</span>
+                  <span className="text-[10px] text-gray-400 block">{t.buyer.marketplace.perMillionTokens}</span>
                 </div>
               </div>
             </div>
@@ -245,16 +242,16 @@ export function BuyerMarketplace() {
               </p>
             </div>
 
-            {/* Collapsible Advanced Section (Per contract) */}
+            {/* Collapsible Advanced Section */}
             <div className="pt-3 border-t border-gray-200">
               <button
                 type="button"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className="w-full flex items-center justify-between text-xs font-bold text-gray-800 hover:text-gray-950 py-2"
+                className="w-full flex items-center justify-between text-xs font-bold text-gray-800 hover:text-gray-950 py-2 cursor-pointer"
               >
                 <div className="flex items-center gap-1.5 font-mono">
                   <Activity className="w-3.5 h-3.5 text-gray-500" />
-                  <span>Advanced Performance & SLO Data</span>
+                  <span>{t.buyer.marketplace.drawerSpecs} & SLO Data</span>
                 </div>
                 {showAdvanced ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
@@ -262,20 +259,20 @@ export function BuyerMarketplace() {
               {showAdvanced && (
                 <div className="mt-3 p-4 bg-gray-50 rounded-xl space-y-3 text-xs font-mono">
                   <div className="flex justify-between pb-2 border-b border-gray-200/60">
-                    <span className="text-gray-500">p95 TTFT Latency:</span>
+                    <span className="text-gray-500">{t.buyer.marketplace.drawerLatency}:</span>
                     <span className="font-bold text-gray-900">{selectedModel.p95LatencyMs} ms</span>
                   </div>
                   <div className="flex justify-between pb-2 border-b border-gray-200/60">
-                    <span className="text-gray-500">Peak Throughput:</span>
-                    <span className="font-bold text-gray-900">{selectedModel.throughputTokensPerSec} tokens/sec</span>
+                    <span className="text-gray-500">{t.buyer.marketplace.drawerContext}:</span>
+                    <span className="font-bold text-gray-900">{selectedModel.contextWindow}</span>
                   </div>
                   <div className="flex justify-between pb-2 border-b border-gray-200/60">
-                    <span className="text-gray-500">Historical 30-Day SLA:</span>
-                    <span className="font-bold text-emerald-700">{selectedModel.availability}%</span>
+                    <span className="text-gray-500">{t.buyer.marketplace.drawerStatus}:</span>
+                    <span className="font-bold text-emerald-700">{selectedModel.availability}% SLA</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Supported Regions:</span>
-                    <span className="font-bold text-gray-900">US-West, EU-Central, AP-East</span>
+                    <span className="text-gray-500">{t.buyer.marketplace.drawerAttestation}:</span>
+                    <span className="font-bold text-gray-900">AMD SEV-SNP / AWS Nitro</span>
                   </div>
                 </div>
               )}
@@ -293,7 +290,7 @@ export function BuyerMarketplace() {
                 className="w-full"
               >
                 <Terminal className="w-4 h-4" />
-                <span>Launch in Playground</span>
+                <span>{t.buyer.marketplace.testInPlayground}</span>
               </BCButton>
             </div>
           </div>

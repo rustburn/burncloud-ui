@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Server,
   Cpu,
-  Thermometer,
-  Activity,
-  HardDrive,
   PowerOff,
-  RefreshCw,
-  Plus,
-  ShieldCheck,
   AlertTriangle
 } from 'lucide-react';
 import {
@@ -16,12 +9,13 @@ import {
   BCCard,
   BCButton,
   BCBadge,
-  BCStatus,
   BCModal
 } from '@/components/ui';
 import { MOCK_SUPPLIER_NODES, SupplierGpuNode } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function SupplierResources() {
+  const { t } = useTranslation();
   const [nodes, setNodes] = useState<SupplierGpuNode[]>(MOCK_SUPPLIER_NODES);
   const [selectedNode, setSelectedNode] = useState<SupplierGpuNode | null>(null);
   const [isDrainModalOpen, setIsDrainModalOpen] = useState(false);
@@ -41,10 +35,10 @@ export function SupplierResources() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="GPU Clusters & Resources"
-        subtitle="Manage hardware inventory, VRAM allocations, thermal telemetry, and graceful draining."
+        title={t.supplier.resources.title}
+        subtitle={t.supplier.resources.subtitle}
         conclusion={{
-          text: "3 Clusters online. 24 Enterprise SXM GPUs + 4 Edge RTX GPUs delivering 180 TFLOPS FP8 capacity.",
+          text: t.supplier.resources.conclusion,
           type: 'healthy'
         }}
       />
@@ -65,7 +59,7 @@ export function SupplierResources() {
               </div>
 
               <div className="text-right font-mono">
-                <span className="text-[10px] text-gray-400 block uppercase">TODAY REVENUE</span>
+                <span className="text-[10px] text-gray-400 block uppercase">{t.supplier.resources.todayRevenue}</span>
                 <span className="text-sm font-bold text-emerald-700">${node.earningsToday.toFixed(2)}</span>
               </div>
             </div>
@@ -73,19 +67,19 @@ export function SupplierResources() {
             {/* Hardware Specs Grid */}
             <div className="grid grid-cols-2 gap-2 text-xs font-mono bg-gray-50 p-3 rounded-xl border border-gray-100">
               <div>
-                <span className="text-[10px] text-gray-400 block">GPU CHIPS</span>
+                <span className="text-[10px] text-gray-400 block">{t.supplier.resources.gpuChips}</span>
                 <span className="font-semibold text-gray-900 font-sans">{node.gpuCount}x {node.gpuType}</span>
               </div>
               <div>
-                <span className="text-[10px] text-gray-400 block">TOTAL VRAM</span>
+                <span className="text-[10px] text-gray-400 block">{t.supplier.resources.totalVram}</span>
                 <span className="font-semibold text-gray-900">{node.vramTotalGb} GB High-Bandwidth</span>
               </div>
               <div className="pt-2 border-t border-gray-200/60">
-                <span className="text-[10px] text-gray-400 block">INTERCONNECT</span>
+                <span className="text-[10px] text-gray-400 block">{t.supplier.resources.interconnect}</span>
                 <span className="font-semibold text-gray-900">{node.pcieBandwidth}</span>
               </div>
               <div className="pt-2 border-t border-gray-200/60">
-                <span className="text-[10px] text-gray-400 block">TEMPERATURE</span>
+                <span className="text-[10px] text-gray-400 block">{t.supplier.resources.temperature}</span>
                 <span className={node.temperatureC > 70 ? 'text-amber-600 font-bold' : 'text-gray-900 font-semibold'}>
                   {node.temperatureC} °C
                 </span>
@@ -95,7 +89,7 @@ export function SupplierResources() {
             {/* Utilization Bar */}
             <div className="space-y-1">
               <div className="flex justify-between text-xs">
-                <span className="text-gray-600 font-medium font-sans">Active Compute Load</span>
+                <span className="text-gray-600 font-medium font-sans">{t.supplier.resources.activeComputeLoad}</span>
                 <span className="font-mono font-bold text-gray-900">{node.utilization}%</span>
               </div>
               <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
@@ -110,14 +104,14 @@ export function SupplierResources() {
             <div className="p-2.5 bg-blue-50/60 rounded-xl border border-blue-100 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-blue-700" />
-                <span className="text-blue-950 font-medium">Model: {node.assignedModel}</span>
+                <span className="text-blue-950 font-medium">{t.supplier.resources.assignedModel}: {node.assignedModel}</span>
               </div>
-              <span className="text-[10px] font-mono text-blue-700">Autopilot Assigned</span>
+              <span className="text-[10px] font-mono text-blue-700">{t.supplier.resources.autopilotAssigned}</span>
             </div>
 
             {/* Bottom Actions */}
             <div className="pt-2 flex items-center justify-between">
-              <span className="text-[11px] font-mono text-gray-400">Uptime: {node.uptimeHours} hrs</span>
+              <span className="text-[11px] font-mono text-gray-400">{t.supplier.resources.uptime}: {node.uptimeHours} hrs</span>
               {node.status === 'Online' && (
                 <BCButton
                   variant="secondary"
@@ -125,7 +119,7 @@ export function SupplierResources() {
                   onClick={() => handleDrainNode(node)}
                 >
                   <PowerOff className="w-3 h-3 text-gray-600" />
-                  <span>Request Graceful Drain</span>
+                  <span>{t.supplier.resources.gracefulDrainBtn}</span>
                 </BCButton>
               )}
             </div>
@@ -138,7 +132,7 @@ export function SupplierResources() {
         <BCModal
           isOpen={isDrainModalOpen}
           onClose={() => setIsDrainModalOpen(false)}
-          title={`Graceful Drain: ${selectedNode.name}`}
+          title={`${t.supplier.resources.gracefulDrainBtn}: ${selectedNode.name}`}
           subtitle="Safely migrate active inference workloads before taking hardware offline."
         >
           <div className="space-y-4 text-xs font-sans">
@@ -158,14 +152,14 @@ export function SupplierResources() {
                 size="sm"
                 onClick={() => setIsDrainModalOpen(false)}
               >
-                Cancel
+                {t.common.cancel}
               </BCButton>
               <BCButton
                 variant="danger"
                 size="sm"
                 onClick={confirmDrain}
               >
-                Confirm Node Drain
+                {t.common.confirm}
               </BCButton>
             </div>
           </div>

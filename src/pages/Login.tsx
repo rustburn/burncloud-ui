@@ -15,9 +15,12 @@ import {
 } from 'lucide-react';
 import { Button, Card, Input, Badge } from '@/components/ui';
 import { Logo } from '@/components/Logo';
+import { useTranslation } from '@/i18n/I18nContext';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 export function Login() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [email, setEmail] = useState('wei@burncloud.io');
   const [password, setPassword] = useState('••••••••••••');
   const [rememberMe, setRememberMe] = useState(true);
@@ -28,7 +31,7 @@ export function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setStatusMessage("Authenticating with BurnCloud Hardware Enclave...");
+    setStatusMessage(t.publicPages.login.authenticating);
 
     setTimeout(() => {
       setIsLoading(false);
@@ -38,7 +41,7 @@ export function Login() {
 
   const handlePasskeyLogin = () => {
     setIsLoading(true);
-    setStatusMessage("Probing hardware security key via WebAuthn TPM...");
+    setStatusMessage(t.publicPages.login.probingHardware);
 
     setTimeout(() => {
       setIsLoading(false);
@@ -54,10 +57,11 @@ export function Login() {
           <Logo className="w-7 h-7 group-hover:scale-105 transition-transform" />
           <span className="font-display font-bold text-lg tracking-tight text-gray-900">BurnCloud</span>
         </Link>
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          <span>Don't have an account?</span>
+        <div className="flex items-center gap-4 text-xs text-gray-500">
+          <LanguageSwitcher variant="compact" />
+          <span>{t.publicPages.login.dontHaveAccount}</span>
           <Link to="/register" className="font-semibold text-gray-900 hover:underline">
-            Create account
+            {t.publicPages.login.createAccount}
           </Link>
         </div>
       </header>
@@ -72,13 +76,13 @@ export function Login() {
           >
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-medium font-mono mb-1">
               <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-              <span>TPM Hardware Attested Portal</span>
+              <span>{t.publicPages.login.hardwarePortal}</span>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-950">
-              Sign in to BurnCloud
+              {t.publicPages.login.title}
             </h1>
             <p className="text-xs text-gray-500">
-              Access your silicon route Gateway console and cryptographic receipts.
+              {t.publicPages.login.subtitle}
             </p>
           </motion.div>
 
@@ -92,7 +96,7 @@ export function Login() {
                   authMethod === 'password' ? 'bg-white text-gray-950 shadow-sm font-semibold' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
-                Password & 2FA
+                {t.publicPages.login.passwordAnd2fa}
               </button>
               <button
                 type="button"
@@ -102,7 +106,7 @@ export function Login() {
                 }`}
               >
                 <Fingerprint className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Passkey / Enclave</span>
+                <span>{t.publicPages.login.passkeyEnclave}</span>
               </button>
             </div>
 
@@ -110,7 +114,7 @@ export function Login() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-gray-700 block">
-                    Work Email Address
+                    {t.publicPages.login.workEmail}
                   </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -127,9 +131,9 @@ export function Login() {
 
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <label className="font-semibold text-gray-700">Password</label>
+                    <label className="font-semibold text-gray-700">{t.publicPages.login.password}</label>
                     <a href="#forgot" onClick={(e) => { e.preventDefault(); alert("A password reset token has been issued to your registered hardware key."); }} className="text-blue-600 hover:underline font-medium">
-                      Forgot?
+                      {t.publicPages.login.forgot}
                     </a>
                   </div>
                   <div className="relative">
@@ -153,7 +157,7 @@ export function Login() {
                       onChange={(e) => setRememberMe(e.target.checked)}
                       className="rounded border-gray-300 text-gray-900 focus:ring-gray-900"
                     />
-                    <span>Remember this session</span>
+                    <span>{t.publicPages.login.rememberSession}</span>
                   </label>
                   <span className="text-[10px] text-gray-400 font-mono">256-bit TLS</span>
                 </div>
@@ -170,7 +174,7 @@ export function Login() {
                   disabled={isLoading}
                   className="w-full h-10 gap-2 text-xs font-semibold"
                 >
-                  {isLoading ? 'Signing in...' : 'Sign in to Console'}
+                  {isLoading ? t.common.loading : t.publicPages.login.signInBtn}
                   {!isLoading && <ArrowRight className="w-4 h-4" />}
                 </Button>
               </form>
@@ -180,7 +184,7 @@ export function Login() {
                   <Fingerprint className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-gray-900">Touch ID / YubiKey Authentication</h3>
+                  <h3 className="text-sm font-bold text-gray-900">{t.publicPages.login.tpmDeviceDetected}</h3>
                   <p className="text-xs text-gray-500 mt-1 max-w-xs mx-auto">
                     Authenticate using your physical hardware key or biometric enclave bound to your account.
                   </p>
@@ -199,7 +203,7 @@ export function Login() {
                   className="w-full h-10 gap-2 text-xs font-semibold bg-gray-900"
                 >
                   <Fingerprint className="w-4 h-4 text-indigo-400" />
-                  <span>Prompt Passkey Challenge</span>
+                  <span>{t.publicPages.login.authenticatePasskey}</span>
                 </Button>
               </div>
             )}
@@ -207,7 +211,7 @@ export function Login() {
             {/* Quick Demo Login Option */}
             <div className="pt-4 border-t border-gray-100 text-center space-y-3">
               <span className="text-[11px] text-gray-400 font-medium block uppercase tracking-wider">
-                Or Quick Test Drive
+                {t.publicPages.login.orQuickDrive}
               </span>
               <Button
                 variant="secondary"
@@ -218,7 +222,7 @@ export function Login() {
                 className="w-full h-9 text-xs gap-1.5 text-gray-700"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                <span>One-Click Instant Demo Login</span>
+                <span>{t.publicPages.login.instantDemoLogin}</span>
               </Button>
             </div>
           </Card>

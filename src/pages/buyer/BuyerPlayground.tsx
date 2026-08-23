@@ -4,27 +4,20 @@ import {
   Copy,
   Check,
   RotateCcw,
-  Sparkles,
-  Sliders,
   Code2,
-  Terminal,
-  Zap,
-  Clock,
-  Coins,
   ShieldCheck,
   Cpu
 } from 'lucide-react';
 import {
   BCPageHeader,
   BCCard,
-  BCButton,
-  BCBadge,
-  BCStatus,
-  BCInput
+  BCButton
 } from '@/components/ui';
 import { WORKBENCH_MODELS, ModelItem } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function BuyerPlayground() {
+  const { t } = useTranslation();
   const [selectedModel, setSelectedModel] = useState<ModelItem>(WORKBENCH_MODELS[0]);
   const [selectedTier, setSelectedTier] = useState<'Economy' | 'Standard' | 'Performance'>('Standard');
   const [systemPrompt, setSystemPrompt] = useState<string>('You are an expert full-stack engineer and distributed systems architect. Provide precise, actionable technical answers.');
@@ -154,10 +147,10 @@ main();`;
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Model Playground"
-        subtitle="Benchmark and test models in real time with hardware-attested token generation."
+        title={t.buyer.playground.title}
+        subtitle={t.buyer.playground.subtitle}
         conclusion={{
-          text: `Testing ${selectedModel.name} on ${selectedTier} Tier. Pass-through rate: $${selectedModel.inputPrice1M}/1M in, $${selectedModel.outputPrice1M}/1M out.`,
+          text: `${t.buyer.playground.conclusion} (${selectedModel.name} • ${selectedTier})`,
           type: 'healthy'
         }}
       />
@@ -169,12 +162,12 @@ main();`;
           <BCCard className="p-5 space-y-4">
             <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider font-mono flex items-center gap-1.5">
               <Cpu className="w-4 h-4 text-gray-700" />
-              <span>Model & Routing Tier</span>
+              <span>{t.buyer.playground.modelSelect} & {t.buyer.playground.routingTier}</span>
             </h3>
 
             {/* Model Select */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-700">Model</label>
+              <label className="text-xs font-semibold text-gray-700">{t.buyer.playground.modelSelect}</label>
               <select
                 value={selectedModel.id}
                 onChange={(e) => {
@@ -193,34 +186,34 @@ main();`;
 
             {/* Performance Tier Selector */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-700">Performance Tier</label>
+              <label className="text-xs font-semibold text-gray-700">{t.buyer.playground.routingTier}</label>
               <div className="grid grid-cols-3 gap-1.5 bg-gray-100 p-1 rounded-xl">
                 {(['Economy', 'Standard', 'Performance'] as const).map((tier) => (
                   <button
                     key={tier}
                     type="button"
                     onClick={() => setSelectedTier(tier)}
-                    className={`py-1.5 text-xs font-medium rounded-lg transition-all ${
+                    className={`py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
                       selectedTier === tier
                         ? 'bg-white text-gray-950 font-bold shadow-xs'
                         : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
-                    {tier}
+                    {tier === 'Economy' ? t.buyer.playground.tierEconomy.split(' ')[0] : tier === 'Standard' ? t.buyer.playground.tierStandard.split(' ')[0] : t.buyer.playground.tierPerformance.split(' ')[0]}
                   </button>
                 ))}
               </div>
               <p className="text-[10px] text-gray-500 mt-1">
-                {selectedTier === 'Economy' && 'Optimized for batch and cost-sensitive workloads.'}
-                {selectedTier === 'Standard' && 'Default production tier balancing sub-200ms latency and cost.'}
-                {selectedTier === 'Performance' && 'Dedicated headroom with guaranteed sub-150ms TTFT.'}
+                {selectedTier === 'Economy' && t.buyer.playground.tierEconomyDesc}
+                {selectedTier === 'Standard' && t.buyer.playground.tierStandardDesc}
+                {selectedTier === 'Performance' && t.buyer.playground.tierPerformanceDesc}
               </p>
             </div>
 
             {/* Hyperparameters */}
             <div className="pt-3 border-t border-gray-100 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-gray-700">Temperature</span>
+                <span className="text-xs font-semibold text-gray-700">{t.buyer.playground.temperature}</span>
                 <span className="text-xs font-mono font-bold text-gray-900">{temperature}</span>
               </div>
               <input
@@ -234,7 +227,7 @@ main();`;
               />
 
               <div className="flex items-center justify-between pt-1">
-                <span className="text-xs font-semibold text-gray-700">Max Tokens</span>
+                <span className="text-xs font-semibold text-gray-700">{t.buyer.playground.maxTokens}</span>
                 <span className="text-xs font-mono font-bold text-gray-900">{maxTokens}</span>
               </div>
               <input
@@ -254,14 +247,14 @@ main();`;
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-900 font-mono">
                 <Code2 className="w-3.5 h-3.5" />
-                <span>API Integration</span>
+                <span>{t.buyer.playground.codeSnippetTitle}</span>
               </div>
               <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-lg text-[10px] font-mono">
                 {(['curl', 'python', 'node'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveCodeTab(tab)}
-                    className={`px-2 py-0.5 rounded capitalize ${
+                    className={`px-2 py-0.5 rounded capitalize cursor-pointer ${
                       activeCodeTab === tab ? 'bg-white font-bold text-gray-900 shadow-xs' : 'text-gray-500'
                     }`}
                   >
@@ -284,7 +277,7 @@ main();`;
               className="w-full text-[11px]"
             >
               {copiedCode ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-              <span>{copiedCode ? 'Copied to Clipboard' : 'Copy Code Snippet'}</span>
+              <span>{copiedCode ? t.buyer.playground.codeCopied : t.buyer.playground.copyCode}</span>
             </BCButton>
           </BCCard>
         </div>
@@ -295,7 +288,7 @@ main();`;
             {/* System Prompt Input */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-                <span>System Prompt</span>
+                <span>{t.buyer.playground.systemPrompt}</span>
                 <span className="text-[10px] font-mono text-gray-400">Optional</span>
               </label>
               <textarea
@@ -309,7 +302,7 @@ main();`;
 
             {/* User Prompt Input */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-700">User Prompt</label>
+              <label className="text-xs font-semibold text-gray-700">{t.buyer.playground.userPrompt}</label>
               <textarea
                 rows={4}
                 value={userPrompt}
@@ -323,7 +316,7 @@ main();`;
             <div className="flex items-center justify-between pt-2 border-t border-gray-100">
               <div className="flex items-center gap-2 text-xs text-gray-500 font-mono">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>Hardware Attestation Active</span>
+                <span>{t.buyer.playground.nitroEnclaveVerified}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -336,7 +329,7 @@ main();`;
                   }}
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Reset</span>
+                  <span>{t.buyer.playground.clear}</span>
                 </BCButton>
 
                 <BCButton
@@ -346,7 +339,7 @@ main();`;
                   onClick={handleRunInference}
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Run Inference</span>
+                  <span>{isLoading ? t.buyer.playground.running : t.buyer.playground.runInference}</span>
                 </BCButton>
               </div>
             </div>
@@ -356,12 +349,12 @@ main();`;
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs pb-2 border-b border-gray-200/60">
                   <span className="font-semibold text-gray-700 font-mono uppercase text-[10px]">
-                    Live Response Stream
+                    {t.buyer.playground.responseOutput}
                   </span>
                   {isLoading && (
                     <span className="flex items-center gap-1.5 text-xs text-blue-600 font-mono font-medium">
                       <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
-                      Generating Tokens...
+                      {t.buyer.playground.running}
                     </span>
                   )}
                 </div>
@@ -369,7 +362,7 @@ main();`;
                 <div className="text-xs text-gray-900 font-mono whitespace-pre-wrap leading-relaxed min-h-[140px]">
                   {streamedResponse || (
                     <span className="text-gray-400 italic">
-                      Click "Run Inference" above to execute and stream response.
+                      Click "{t.buyer.playground.runInference}" above to execute and stream response.
                     </span>
                   )}
                 </div>
@@ -379,21 +372,21 @@ main();`;
               {executionStats && (
                 <div className="pt-3 border-t border-gray-200/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono text-gray-600">
                   <div className="p-2 bg-white rounded-lg border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px]">TTFT</span>
+                    <span className="text-gray-400 block text-[9px]">{t.buyer.playground.ttft}</span>
                     <span className="font-bold text-gray-900">{executionStats.ttftMs} ms</span>
                   </div>
                   <div className="p-2 bg-white rounded-lg border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px]">TOTAL LATENCY</span>
+                    <span className="text-gray-400 block text-[9px]">{t.buyer.playground.totalTime}</span>
                     <span className="font-bold text-gray-900">{executionStats.totalMs} ms</span>
                   </div>
                   <div className="p-2 bg-white rounded-lg border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px]">TOKENS (IN / OUT)</span>
+                    <span className="text-gray-400 block text-[9px]">{t.buyer.playground.tokensGenerated}</span>
                     <span className="font-bold text-gray-900">
                       {executionStats.promptTokens} / {executionStats.completionTokens}
                     </span>
                   </div>
                   <div className="p-2 bg-white rounded-lg border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px]">ESTIMATED COST</span>
+                    <span className="text-gray-400 block text-[9px]">{t.buyer.playground.costEstimate}</span>
                     <span className="font-bold text-emerald-700">${executionStats.costUsd}</span>
                   </div>
                 </div>

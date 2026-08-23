@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import {
-  ScrollText,
-  Search,
-  Filter,
-  ArrowRight,
   ShieldCheck,
-  CheckCircle2,
-  AlertTriangle,
-  Clock,
-  Zap,
-  Code2,
   RefreshCw
 } from 'lucide-react';
 import {
@@ -20,6 +11,7 @@ import {
   BCDrawer,
   BCSearch
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 interface RequestLog {
   id: string;
@@ -98,6 +90,7 @@ const MOCK_REQUEST_LOGS: RequestLog[] = [
 ];
 
 export function BuyerLogs() {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<RequestLog[]>(MOCK_REQUEST_LOGS);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLog, setSelectedLog] = useState<RequestLog | null>(null);
@@ -112,10 +105,10 @@ export function BuyerLogs() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Request Logs & Inspector"
-        subtitle="Real-time audit trace for every token generation request with cryptographic latency verification."
+        title={t.buyer.logs.title}
+        subtitle={t.buyer.logs.subtitle}
         conclusion={{
-          text: "100% of requests in the last hour met SLA targets. No unhandled errors.",
+          text: t.buyer.logs.conclusion,
           type: 'healthy'
         }}
       />
@@ -126,7 +119,7 @@ export function BuyerLogs() {
           <BCSearch
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search request ID, model, API key..."
+            placeholder={t.buyer.logs.searchPlaceholder}
           />
         </div>
         <BCButton
@@ -137,7 +130,7 @@ export function BuyerLogs() {
           }}
         >
           <RefreshCw className="w-3.5 h-3.5" />
-          <span>Refresh Feed</span>
+          <span>{t.buyer.logs.filterAll}</span>
         </BCButton>
       </div>
 
@@ -147,15 +140,15 @@ export function BuyerLogs() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Timestamp</th>
-                <th className="pb-3 font-semibold">Request ID</th>
-                <th className="pb-3 font-semibold">Model & Tier</th>
-                <th className="pb-3 font-semibold">Status</th>
-                <th className="pb-3 font-semibold">TTFT</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colTime}</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colRequestId}</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colModel}</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colStatus}</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colLatency}</th>
                 <th className="pb-3 font-semibold">Total Latency</th>
-                <th className="pb-3 font-semibold">Tokens</th>
-                <th className="pb-3 font-semibold">Cost</th>
-                <th className="pb-3 font-semibold text-right">Action</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colTokens}</th>
+                <th className="pb-3 font-semibold">{t.buyer.logs.colCost}</th>
+                <th className="pb-3 font-semibold text-right">{t.buyer.logs.colInspect}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -183,8 +176,8 @@ export function BuyerLogs() {
                   </td>
                   <td className="py-3 font-bold text-gray-950">${log.costUsd.toFixed(6)}</td>
                   <td className="py-3 text-right">
-                    <button className="text-blue-600 hover:underline text-xs font-sans font-medium">
-                      Inspect →
+                    <button className="text-blue-600 hover:underline text-xs font-sans font-medium cursor-pointer">
+                      {t.buyer.logs.colInspect} →
                     </button>
                   </td>
                 </tr>
@@ -206,7 +199,7 @@ export function BuyerLogs() {
             {/* Status Summary */}
             <div className="p-4 bg-gray-50 rounded-xl border border-gray-200/70 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-gray-900 font-mono">HTTP Status Code</span>
+                <span className="font-bold text-gray-900 font-mono">{t.buyer.logs.colStatus}</span>
                 <BCBadge variant="success" size="md">{selectedLog.status} OK</BCBadge>
               </div>
               <div className="grid grid-cols-2 gap-3 pt-2 font-mono">
@@ -224,7 +217,7 @@ export function BuyerLogs() {
             {/* Token & Cost Breakdown */}
             <div className="space-y-2">
               <h4 className="font-bold text-gray-900 uppercase font-mono tracking-wider text-[11px]">
-                Token & Billing Computation
+                {t.buyer.logs.colTokens} & {t.buyer.logs.colCost}
               </h4>
               <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-2 font-mono">
                 <div className="flex justify-between">

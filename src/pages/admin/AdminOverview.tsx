@@ -1,17 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  DollarSign,
-  TrendingUp,
   Server,
-  Activity,
-  Zap,
+  TrendingUp,
   AlertTriangle,
   ArrowRight,
-  ShieldCheck,
-  Cpu,
-  Layers,
-  Users,
   Gauge,
   Workflow
 } from 'lucide-react';
@@ -25,19 +18,21 @@ import {
 } from '@/components/ui';
 import { useRole } from '@/context/RoleContext';
 import { MOCK_AUTOPILOT_LOGS } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminOverview() {
   const navigate = useNavigate();
   const { adminRevenueToday } = useRole();
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-6">
       {/* 1. Page Header */}
       <BCPageHeader
-        title="Admin Platform Command"
-        subtitle="Global AI infrastructure orchestration, capacity headroom, and real-time financial economics."
+        title={t.admin.overview.title}
+        subtitle={t.admin.overview.subtitle}
         conclusion={{
-          text: "Platform operations healthy. Autopilot automatically resolved 2 capacity surges in US-West today.",
+          text: t.admin.overview.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -48,7 +43,7 @@ export function AdminOverview() {
               onClick={() => navigate('/admin/operations')}
             >
               <Workflow className="w-3.5 h-3.5" />
-              <span>Autopilot Center</span>
+              <span>{t.admin.overview.actionAutopilotCenter}</span>
             </BCButton>
             <BCButton
               variant="primary"
@@ -56,47 +51,47 @@ export function AdminOverview() {
               onClick={() => navigate('/admin/capacity')}
             >
               <Gauge className="w-3.5 h-3.5" />
-              <span>Manage Capacity Headroom</span>
+              <span>{t.admin.overview.actionManageHeadroom}</span>
             </BCButton>
           </div>
         }
       />
 
-      {/* 2. Four Primary Metrics (Fixed Order per Admin Contract) */}
+      {/* 2. Four Primary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* 1: Today Revenue */}
         <BCMetric
-          label="Today Platform GMV"
+          label={t.admin.overview.metricPlatformGmv}
           value={`$${adminRevenueToday.toLocaleString()}`}
           trend="+22.8% vs last week"
           trendPositive={true}
-          subtitle="Gross token volume"
+          subtitle={t.admin.overview.metricPlatformGmvSub}
         />
 
         {/* 2: Gross Margin */}
         <BCMetric
-          label="Platform Margin"
+          label={t.admin.overview.metricGrossMargin}
           value="32.4%"
           trend="+1.8% vs target"
           trendPositive={true}
-          subtitle="Net after supplier COGS"
+          subtitle={t.admin.overview.metricGrossMarginSub}
         />
 
         {/* 3: Online GPU Capacity */}
         <BCMetric
-          label="Online Compute Fleet"
+          label={t.admin.overview.metricOnlineGpus}
           value="420"
           unit="GPUs"
           status={<BCStatus status="Online" label="1,840 TFLOPS" />}
-          subtitle="312x H100 • 76x A100 • 32x Edge"
+          subtitle={t.admin.overview.metricOnlineGpusSub}
         />
 
         {/* 4: API Availability */}
         <BCMetric
-          label="Global API SLA"
+          label={t.admin.overview.metricGlobalSla}
           value="99.99%"
           status={<BCStatus status="Healthy" />}
-          subtitle="0 customer SLA breaches (30D)"
+          subtitle={t.admin.overview.metricGlobalSlaSub}
         />
       </div>
 
@@ -105,9 +100,9 @@ export function AdminOverview() {
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h4 className="text-sm font-bold text-amber-950">Capacity Headroom Warning: DeepSeek V3 in US-West</h4>
+            <h4 className="text-sm font-bold text-amber-950">{t.admin.overview.capacityWarningTitle}</h4>
             <p className="text-xs text-amber-800 mt-0.5">
-              Current peak concurrency reached 89.2% of provisioned tokens. Autopilot has reserved 2 standby supplier nodes.
+              {t.admin.overview.capacityWarningDesc}
             </p>
           </div>
         </div>
@@ -117,7 +112,7 @@ export function AdminOverview() {
           onClick={() => navigate('/admin/capacity')}
           className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
         >
-          <span>Adjust Autoscaling Policy</span>
+          <span>{t.admin.overview.actionAdjustPolicy}</span>
         </BCButton>
       </div>
 
@@ -125,8 +120,8 @@ export function AdminOverview() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Autopilot Autonomous Actions</h3>
-            <p className="text-xs text-gray-500">Autonomous capacity provisioning, thermal routing, and circuit breaking.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.overview.autopilotActionsTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.overview.autopilotActionsSubtitle}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -134,7 +129,7 @@ export function AdminOverview() {
             onClick={() => navigate('/admin/operations')}
             className="text-xs"
           >
-            <span>Full Incident Log</span>
+            <span>{t.admin.overview.fullIncidentLog}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </BCButton>
         </div>
@@ -172,27 +167,27 @@ export function AdminOverview() {
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-gray-950 flex items-center gap-2">
               <Server className="w-4 h-4 text-gray-700" />
-              <span>Compute Supply Sources</span>
+              <span>{t.admin.overview.supplySourcesTitle}</span>
             </h3>
             <button
               onClick={() => navigate('/admin/supply')}
-              className="text-xs font-semibold text-blue-600 hover:underline"
+              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
             >
-              View Supply Fleets →
+              {t.admin.overview.viewSupplyFleets} →
             </button>
           </div>
 
           <div className="space-y-2 text-xs font-mono pt-1">
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">Verified Supplier Fleets (L2-L4)</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.verifiedSuppliers}</span>
               <span className="font-bold text-gray-900">280 GPUs (66.7%)</span>
             </div>
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">BurnCloud Owned Bare-Metal IDC</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.ownedBareMetal}</span>
               <span className="font-bold text-gray-900">96 GPUs (22.8%)</span>
             </div>
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">External Cloud Elastic Fallbacks</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.elasticFallbacks}</span>
               <span className="font-bold text-gray-900">44 GPUs (10.5%)</span>
             </div>
           </div>
@@ -203,27 +198,27 @@ export function AdminOverview() {
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-gray-950 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-gray-700" />
-              <span>Real-Time Demand Pressure</span>
+              <span>{t.admin.overview.demandPressureTitle}</span>
             </h3>
             <button
               onClick={() => navigate('/admin/demand')}
-              className="text-xs font-semibold text-blue-600 hover:underline"
+              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
             >
-              View Traffic Velocity →
+              {t.admin.overview.viewVelocity} →
             </button>
           </div>
 
           <div className="space-y-2 text-xs font-mono pt-1">
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">Current Velocity</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.currentVelocity}</span>
               <span className="font-bold text-gray-900">42,800 tokens / sec</span>
             </div>
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">Peak Concurrency (US-West)</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.peakConcurrency}</span>
               <span className="font-bold text-amber-700">89.2% (High)</span>
             </div>
             <div className="flex justify-between p-2 bg-gray-50 rounded-lg">
-              <span className="text-gray-600 font-sans">Active Buyer Tenants</span>
+              <span className="text-gray-600 font-sans">{t.admin.overview.activeTenants}</span>
               <span className="font-bold text-gray-900">1,420 Active Teams</span>
             </div>
           </div>

@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
 import {
-  Receipt,
-  CheckCircle2,
-  AlertCircle,
-  Download,
-  Building2,
-  DollarSign,
-  ShieldCheck
-} from 'lucide-react';
-import {
   BCPageHeader,
-  BCMetric,
   BCCard,
   BCButton,
   BCBadge
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminSettlements() {
+  const { t } = useTranslation();
   const [batches, setBatches] = useState([
     {
       id: 'BATCH-2026-08B',
@@ -46,10 +38,10 @@ export function AdminSettlements() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Global Supplier Settlements"
-        subtitle="Review, audit, and approve bi-weekly token inference payout batches."
+        title={t.admin.settlements.title}
+        subtitle={t.admin.settlements.subtitle}
         conclusion={{
-          text: "Batch BATCH-2026-08B pending review ($124,500.00). Zero supplier disputes reported.",
+          text: t.admin.settlements.conclusion,
           type: 'healthy'
         }}
       />
@@ -58,8 +50,8 @@ export function AdminSettlements() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Settlement Batches</h3>
-            <p className="text-xs text-gray-500">Automated payout calculations against verified inference tokens.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.settlements.batchesTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.settlements.batchesSubtitle}</p>
           </div>
         </div>
 
@@ -67,13 +59,13 @@ export function AdminSettlements() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Batch ID</th>
-                <th className="pb-3 font-semibold">Billing Cycle</th>
-                <th className="pb-3 font-semibold">Active Suppliers</th>
-                <th className="pb-3 font-semibold">Inference Tokens</th>
-                <th className="pb-3 font-semibold">Total Payout</th>
-                <th className="pb-3 font-semibold">Status</th>
-                <th className="pb-3 font-semibold text-right">Action</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colBatchId}</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colBillingCycle}</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colActiveSuppliers}</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colInferenceTokens}</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colTotalPayout}</th>
+                <th className="pb-3 font-semibold">{t.admin.settlements.colStatus}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.settlements.colAction}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -96,7 +88,7 @@ export function AdminSettlements() {
                         size="xs"
                         onClick={() => handleApproveBatch(b.id)}
                       >
-                        Approve & Execute
+                        {t.admin.settlements.btnApprove}
                       </BCButton>
                     ) : (
                       <span className="text-xs text-gray-400 font-mono">Completed</span>

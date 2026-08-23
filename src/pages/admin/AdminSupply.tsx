@@ -1,33 +1,23 @@
-import React, { useState } from 'react';
-import {
-  Server,
-  Building2,
-  Cloud,
-  Cpu,
-  ShieldCheck,
-  Zap,
-  Activity,
-  Plus,
-  RefreshCw
-} from 'lucide-react';
+import React from 'react';
 import {
   BCPageHeader,
   BCMetric,
   BCCard,
-  BCButton,
-  BCBadge,
   BCStatus
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminSupply() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Supply Infrastructure Fleets"
-        subtitle="Global compute inventory across decentralized suppliers, owned bare-metal IDC, and cloud reservations."
+        title={t.admin.supply.title}
+        subtitle={t.admin.supply.subtitle}
         conclusion={{
-          text: "420 Online GPUs across 14 clusters in 3 continents. Aggregate capacity: 1,840 TFLOPS FP8.",
+          text: t.admin.supply.conclusion,
           type: 'healthy'
         }}
       />
@@ -35,24 +25,24 @@ export function AdminSupply() {
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="Total Fleet GPUs"
+          label={t.admin.supply.metricTotalGpus}
           value="420"
           unit="GPUs"
           subtitle="96.2% fleet online rate"
         />
         <BCMetric
-          label="Verified Suppliers"
+          label={t.admin.supply.metricVerifiedSuppliers}
           value="24"
           subtitle="Tier L2-L4 Providers"
         />
         <BCMetric
-          label="Owned Bare-Metal"
+          label={t.admin.supply.metricBareMetalIdc}
           value="96"
           unit="GPUs"
           subtitle="US-West (SJC) Core DC"
         />
         <BCMetric
-          label="Elastic Burst Reserve"
+          label={t.admin.supply.metricBurstReserve}
           value="44"
           unit="GPUs"
           subtitle="Lambda Labs / RunPod standby"
@@ -63,8 +53,8 @@ export function AdminSupply() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Active Supply Clusters</h3>
-            <p className="text-xs text-gray-500">Autonomous health monitoring and hardware attestation.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.supply.clustersTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.supply.clustersSubtitle}</p>
           </div>
         </div>
 
@@ -72,13 +62,13 @@ export function AdminSupply() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Cluster Identifier</th>
-                <th className="pb-3 font-semibold">Source Type</th>
-                <th className="pb-3 font-semibold">GPU Configuration</th>
-                <th className="pb-3 font-semibold">Region</th>
-                <th className="pb-3 font-semibold">Current Utilization</th>
-                <th className="pb-3 font-semibold">Attestation</th>
-                <th className="pb-3 font-semibold text-right">Status</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colCluster}</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colSourceType}</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colGpuConfig}</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colRegion}</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colUtilization}</th>
+                <th className="pb-3 font-semibold">{t.admin.supply.colAttestation}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.supply.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

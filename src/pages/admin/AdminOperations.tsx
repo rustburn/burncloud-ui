@@ -1,36 +1,28 @@
 import React, { useState } from 'react';
 import {
-  Workflow,
-  Zap,
-  ShieldAlert,
-  Activity,
-  AlertTriangle,
-  CheckCircle2,
-  RefreshCw,
-  PowerOff,
-  Sliders
+  ShieldAlert
 } from 'lucide-react';
 import {
   BCPageHeader,
-  BCMetric,
   BCCard,
   BCButton,
-  BCBadge,
-  BCStatus
+  BCBadge
 } from '@/components/ui';
 import { MOCK_AUTOPILOT_LOGS } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminOperations() {
+  const { t } = useTranslation();
   const [circuitBreakerActive, setCircuitBreakerActive] = useState(false);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Autopilot Incident Center & Operations"
-        subtitle="Autonomous mitigation engine, circuit breakers, failover execution logs, and manual overrides."
+        title={t.admin.operations.title}
+        subtitle={t.admin.operations.subtitle}
         conclusion={{
-          text: "Autopilot running autonomously in Active Mode. 100% of anomalies auto-mitigated with zero human intervention.",
+          text: t.admin.operations.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -40,7 +32,7 @@ export function AdminOperations() {
             onClick={() => setCircuitBreakerActive(!circuitBreakerActive)}
           >
             <ShieldAlert className="w-3.5 h-3.5" />
-            <span>Emergency Circuit Breaker: {circuitBreakerActive ? 'ARMED' : 'STANDBY'}</span>
+            <span>{t.admin.operations.btnCircuitBreaker}: {circuitBreakerActive ? 'ARMED' : 'STANDBY'}</span>
           </BCButton>
         }
       />
@@ -49,8 +41,8 @@ export function AdminOperations() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Autonomous Mitigation Event Stream</h3>
-            <p className="text-xs text-gray-500">Real-time decisions taken by BurnCloud Autopilot.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.operations.streamTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.operations.streamSubtitle}</p>
           </div>
         </div>
 

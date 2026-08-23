@@ -1,29 +1,23 @@
 import React from 'react';
 import {
-  TrendingUp,
-  Activity,
-  Users,
-  Layers,
-  Globe2,
-  Clock,
-  Zap
-} from 'lucide-react';
-import {
   BCPageHeader,
   BCMetric,
   BCCard,
   BCBadge
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminDemand() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Demand Pressure & Traffic Velocity"
-        subtitle="Real-time request concurrency, token velocity, and tenant distribution."
+        title={t.admin.demand.title}
+        subtitle={t.admin.demand.subtitle}
         conclusion={{
-          text: "Current global velocity: 42,800 tokens/sec. 1,420 active enterprise tenants generating live requests.",
+          text: t.admin.demand.conclusion,
           type: 'healthy'
         }}
       />
@@ -31,24 +25,24 @@ export function AdminDemand() {
       {/* Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="Live Token Velocity"
+          label={t.admin.demand.metricLiveVelocity}
           value="42,800"
           unit="tokens/s"
           trend="+14.8% vs 1h ago"
           trendPositive={true}
         />
         <BCMetric
-          label="Active Tenants"
+          label={t.admin.demand.metricActiveTenants}
           value="1,420"
           subtitle="Top 50 account for 68% volume"
         />
         <BCMetric
-          label="US-West Traffic Share"
+          label={t.admin.demand.metricRegionalShare}
           value="58.2%"
           subtitle="Silicon Valley low-latency cluster"
         />
         <BCMetric
-          label="Average Request Size"
+          label={t.admin.demand.metricAvgRequestSize}
           value="1,420"
           unit="tokens"
           subtitle="Prompt + Completion"
@@ -59,8 +53,8 @@ export function AdminDemand() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Top Enterprise Tenants (24H)</h3>
-            <p className="text-xs text-gray-500">Highest volume API consumers and token distributions.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.demand.topTenantsTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.demand.topTenantsSubtitle}</p>
           </div>
         </div>
 
@@ -68,12 +62,12 @@ export function AdminDemand() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Tenant Account</th>
-                <th className="pb-3 font-semibold">Tier Preference</th>
-                <th className="pb-3 font-semibold">24H Tokens</th>
-                <th className="pb-3 font-semibold">24H Spend</th>
-                <th className="pb-3 font-semibold">Primary Model</th>
-                <th className="pb-3 font-semibold text-right">Credit Balance</th>
+                <th className="pb-3 font-semibold">{t.admin.demand.colTenant}</th>
+                <th className="pb-3 font-semibold">{t.admin.demand.colTierPref}</th>
+                <th className="pb-3 font-semibold">{t.admin.demand.colTokens24h}</th>
+                <th className="pb-3 font-semibold">{t.admin.demand.colSpend24h}</th>
+                <th className="pb-3 font-semibold">{t.admin.demand.colPrimaryModel}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.demand.colCreditBalance}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

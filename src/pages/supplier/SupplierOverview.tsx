@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Coins,
   Server,
-  Activity,
-  Zap,
-  CheckCircle2,
   AlertTriangle,
   ArrowRight,
-  Plus,
-  TrendingUp,
-  Cpu,
-  Layers,
-  Thermometer,
-  ShieldCheck
+  Plus
 } from 'lucide-react';
 import {
   BCPageHeader,
   BCMetric,
   BCCard,
   BCButton,
-  BCBadge,
   BCStatus,
-  BCModal,
-  BCInput
+  BCModal
 } from '@/components/ui';
 import { useRole } from '@/context/RoleContext';
-import { MOCK_SUPPLIER_NODES, SupplierGpuNode } from '@/data/workbenchData';
+import { MOCK_SUPPLIER_NODES } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function SupplierOverview() {
   const navigate = useNavigate();
   const { supplierEarningsToday } = useRole();
+  const { t } = useTranslation();
   const [isOnboardModalOpen, setIsOnboardModalOpen] = useState(false);
 
   const totalGpus = MOCK_SUPPLIER_NODES.reduce((acc, n) => acc + n.gpuCount, 0);
@@ -45,12 +36,12 @@ export function SupplierOverview() {
     <div className="space-y-6">
       {/* 1. Page Header */}
       <BCPageHeader
-        title="Supplier Overview"
-        subtitle="Monetize GPU compute clusters with BurnCloud Autopilot scheduler."
+        title={t.supplier.overview.title}
+        subtitle={t.supplier.overview.subtitle}
         conclusion={{
           text: degradedNode
-            ? `Node ${degradedNode.name} reported elevated temperature (72°C). Autopilot has throttled non-critical batch traffic.`
-            : "All connected GPU clusters are healthy and earning continuous token inference revenue.",
+            ? `${t.supplier.overview.attentionTitle}: ${degradedNode.name} (72°C).`
+            : t.supplier.overview.conclusion,
           type: degradedNode ? 'warning' : 'healthy'
         }}
         actions={
@@ -61,7 +52,7 @@ export function SupplierOverview() {
               onClick={() => navigate('/supplier/resources')}
             >
               <Server className="w-3.5 h-3.5" />
-              <span>Inspect Nodes</span>
+              <span>{t.supplier.overview.inspectNodes}</span>
             </BCButton>
             <BCButton
               variant="primary"
@@ -69,47 +60,47 @@ export function SupplierOverview() {
               onClick={() => setIsOnboardModalOpen(true)}
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>Connect New GPU Node</span>
+              <span>{t.supplier.overview.connectNodeBtn}</span>
             </BCButton>
           </div>
         }
       />
 
-      {/* 2. Four Primary Metrics (Fixed Order per Supplier Contract) */}
+      {/* 2. Four Primary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* 1: Today Earnings */}
         <BCMetric
-          label="Today Earnings"
+          label={t.supplier.overview.todayEarnings}
           value={`$${supplierEarningsToday.toFixed(2)}`}
           trend="+12.4% vs yesterday"
           trendPositive={true}
-          subtitle="Net revenue share (80%)"
+          subtitle={t.supplier.overview.todayEarningsSub}
         />
 
         {/* 2: Online GPUs */}
         <BCMetric
-          label="Online GPUs"
+          label={t.supplier.overview.onlineGpus}
           value={`${onlineGpus} / ${totalGpus}`}
           unit="GPUs"
           status={<BCStatus status="Online" label="3 Clusters" />}
-          subtitle="24x H100/A100 • 4x RTX 4090"
+          subtitle={t.supplier.overview.onlineGpusSub}
         />
 
         {/* 3: GPU Utilization */}
         <BCMetric
-          label="GPU Utilization"
+          label={t.supplier.overview.gpuUtilization}
           value={`${avgUtilization}%`}
           trend="88.6% peak compute"
           trendPositive={true}
-          subtitle="Autopilot dynamic batching"
+          subtitle={t.supplier.overview.gpuUtilizationSub}
         />
 
         {/* 4: Inference Today */}
         <BCMetric
-          label="Inference Today"
+          label={t.supplier.overview.inferenceTokens}
           value="24.2M"
           unit="tokens"
-          subtitle="DeepSeek V3 & R1 clusters"
+          subtitle={t.supplier.overview.inferenceTokensSub}
         />
       </div>
 
@@ -120,10 +111,10 @@ export function SupplierOverview() {
             <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="text-sm font-bold text-amber-950">
-                Node {degradedNode.name} ({degradedNode.gpuType}) requires maintenance
+                {t.supplier.overview.attentionTitle} ({degradedNode.name})
               </h4>
               <p className="text-xs text-amber-800 mt-0.5">
-                GPU Core Temperature is 72°C. Autopilot has drained priority live traffic to preserve SLA. Please verify chassis fan airflow.
+                {t.supplier.overview.attentionDesc}
               </p>
             </div>
           </div>
@@ -133,7 +124,7 @@ export function SupplierOverview() {
             onClick={() => navigate('/supplier/resources')}
             className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
           >
-            <span>Inspect Node Diagnostics</span>
+            <span>{t.supplier.overview.inspectNodes}</span>
           </BCButton>
         </div>
       )}
@@ -142,8 +133,8 @@ export function SupplierOverview() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Connected Compute Nodes</h3>
-            <p className="text-xs text-gray-500">Autonomous scheduler status and real-time revenue accrual.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.supplier.overview.connectedNodes}</h3>
+            <p className="text-xs text-gray-500">{t.supplier.overview.connectedNodesDesc}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -151,7 +142,7 @@ export function SupplierOverview() {
             onClick={() => navigate('/supplier/resources')}
             className="text-xs"
           >
-            <span>View Cluster Topology</span>
+            <span>{t.supplier.overview.viewTopology}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </BCButton>
         </div>
@@ -160,13 +151,13 @@ export function SupplierOverview() {
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Node Identifier</th>
-                <th className="pb-3 font-semibold">GPU Specs & VRAM</th>
-                <th className="pb-3 font-semibold">Assigned Workload</th>
-                <th className="pb-3 font-semibold">Utilization</th>
-                <th className="pb-3 font-semibold">Temp</th>
-                <th className="pb-3 font-semibold">Today Earnings</th>
-                <th className="pb-3 font-semibold">Status</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colNodeId}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colGpuSpecs}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colAssignedModel}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colUtilization}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colTemperature}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colTodayEarnings}</th>
+                <th className="pb-3 font-semibold">{t.supplier.overview.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 font-mono">
@@ -204,8 +195,8 @@ export function SupplierOverview() {
       <BCModal
         isOpen={isOnboardModalOpen}
         onClose={() => setIsOnboardModalOpen(false)}
-        title="Connect New GPU Node"
-        subtitle="Run the BurnCloud node daemon to join the decentralized compute fabric."
+        title={t.supplier.overview.modalTitle}
+        subtitle={t.supplier.overview.modalSubtitle}
       >
         <div className="space-y-4 text-xs">
           <p className="text-gray-700 leading-relaxed font-sans">
@@ -213,16 +204,16 @@ export function SupplierOverview() {
           </p>
 
           <div className="p-3 bg-gray-950 text-gray-100 rounded-xl font-mono text-[11px] space-y-2">
-            <div className="text-gray-400 text-[10px]">// Run in terminal with sudo privileges:</div>
+            <div className="text-gray-400 text-[10px]">{t.supplier.overview.commandComment}</div>
             <div className="text-emerald-400 select-all overflow-x-auto whitespace-pre">
               curl -sSL https://burncloud.io/install.sh | bash -s -- --token=bc_node_auth_98a72b1
             </div>
           </div>
 
           <div className="p-3 bg-blue-50/80 rounded-xl border border-blue-200/80 space-y-1 font-sans text-blue-900">
-            <div className="font-bold">Automated Verification Protocol:</div>
+            <div className="font-bold">{t.supplier.overview.verificationTitle}:</div>
             <p className="text-[11px] leading-relaxed">
-              Once started, BurnCloud will execute a 60-second hardware attestation benchmark (PCIe bandwidth, FP8/FP16 TFLOPS, memory integrity) and automatically begin routing inference traffic.
+              {t.supplier.overview.verificationDesc}
             </p>
           </div>
 
@@ -232,7 +223,7 @@ export function SupplierOverview() {
               size="sm"
               onClick={() => setIsOnboardModalOpen(false)}
             >
-              Done
+              {t.supplier.overview.modalDone}
             </BCButton>
           </div>
         </div>

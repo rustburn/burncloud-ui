@@ -1,31 +1,23 @@
 import React from 'react';
 import {
-  ShieldCheck,
-  Award,
-  AlertTriangle,
-  CheckCircle2,
-  TrendingUp,
-  Activity,
-  Zap,
-  Server
-} from 'lucide-react';
-import {
   BCPageHeader,
   BCMetric,
   BCCard,
-  BCBadge,
-  BCStatus
+  BCBadge
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function SupplierReliability() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Supplier Reliability & Tier"
-        subtitle="Hardware health audit, uptime performance, and tier qualification level."
+        title={t.supplier.reliability.title}
+        subtitle={t.supplier.reliability.subtitle}
         conclusion={{
-          text: "Supplier Tier: L3 Professional (80% Revenue Share). Overall Reliability Score: 98.6% (Excellent).",
+          text: t.supplier.reliability.conclusion,
           type: 'healthy'
         }}
       />
@@ -33,25 +25,25 @@ export function SupplierReliability() {
       {/* Primary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="Overall Score"
+          label={t.supplier.reliability.metricScore}
           value="98.6"
           unit="/ 100"
           status={<BCBadge variant="success" size="sm">EXCELLENT</BCBadge>}
           subtitle="Top 5% of network suppliers"
         />
         <BCMetric
-          label="30-Day Uptime"
+          label={t.supplier.reliability.metricUptime}
           value="99.94%"
           trend="0 unannounced drops"
           trendPositive={true}
         />
         <BCMetric
-          label="Verification Level"
+          label={t.supplier.reliability.metricVerification}
           value="L3 Pro"
           subtitle="Enterprise SLA qualified"
         />
         <BCMetric
-          label="Rev Share Multiplier"
+          label={t.supplier.reliability.metricRevShareMultiplier}
           value="80.0%"
           subtitle="Base is 70%"
         />
@@ -59,7 +51,7 @@ export function SupplierReliability() {
 
       {/* Tier Roadmap Card */}
       <BCCard className="p-6 space-y-4">
-        <h3 className="text-base font-bold text-gray-950">Supplier Tier Progression</h3>
+        <h3 className="text-base font-bold text-gray-950">{t.supplier.reliability.progressionTitle}</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
           {[
             {
@@ -86,34 +78,34 @@ export function SupplierReliability() {
               req: '64+ H100/B200 Clusters • SOC2 Type II',
               status: 'Eligible with +36 GPUs'
             }
-          ].map((t, idx) => (
+          ].map((item, idx) => (
             <div
               key={idx}
               className={`p-4 rounded-xl border space-y-2 ${
-                t.status === 'Current Tier'
+                item.status === 'Current Tier'
                   ? 'bg-emerald-50/70 border-emerald-300 ring-2 ring-emerald-500/20'
-                  : t.status === 'Completed'
+                  : item.status === 'Completed'
                   ? 'bg-gray-50 border-gray-200 opacity-90'
                   : 'bg-white border-gray-200'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="font-bold text-xs text-gray-900">{t.tier}</span>
+                <span className="font-bold text-xs text-gray-900">{item.tier}</span>
                 <BCBadge
                   variant={
-                    t.status === 'Current Tier'
+                    item.status === 'Current Tier'
                       ? 'success'
-                      : t.status === 'Completed'
+                      : item.status === 'Completed'
                       ? 'neutral'
                       : 'brand'
                   }
                   size="sm"
                 >
-                  {t.status}
+                  {item.status}
                 </BCBadge>
               </div>
-              <div className="text-sm font-bold font-mono text-gray-950">{t.share}</div>
-              <p className="text-[11px] text-gray-500">{t.req}</p>
+              <div className="text-sm font-bold font-mono text-gray-950">{item.share}</div>
+              <p className="text-[11px] text-gray-500">{item.req}</p>
             </div>
           ))}
         </div>
@@ -121,7 +113,7 @@ export function SupplierReliability() {
 
       {/* Incident & Audit History */}
       <BCCard className="p-6 space-y-4">
-        <h3 className="text-base font-bold text-gray-950">Reliability Event Log</h3>
+        <h3 className="text-base font-bold text-gray-950">{t.supplier.reliability.eventLogTitle}</h3>
         <div className="space-y-3">
           {[
             {

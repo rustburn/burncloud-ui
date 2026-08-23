@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import {
-  Receipt,
   DollarSign,
-  ArrowUpRight,
   Download,
   Building2,
-  Wallet,
-  CheckCircle2,
-  Clock,
-  Plus
+  CheckCircle2
 } from 'lucide-react';
 import {
   BCPageHeader,
   BCCard,
   BCButton,
   BCBadge,
-  BCMetric,
   BCModal
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function SupplierSettlements() {
+  const { t } = useTranslation();
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -33,10 +29,10 @@ export function SupplierSettlements() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Settlements & Payouts"
-        subtitle="Withdraw earned token inference revenue via automated wire or stablecoin settlement."
+        title={t.supplier.settlements.title}
+        subtitle={t.supplier.settlements.subtitle}
         conclusion={{
-          text: "Available for instant payout: $6,420.00. Automatic bi-weekly payout scheduled for Sept 1, 2026.",
+          text: t.supplier.settlements.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -46,7 +42,7 @@ export function SupplierSettlements() {
             onClick={() => setIsWithdrawModalOpen(true)}
           >
             <DollarSign className="w-3.5 h-3.5" />
-            <span>Request Early Payout</span>
+            <span>{t.supplier.settlements.requestPayout}</span>
           </BCButton>
         }
       />
@@ -62,23 +58,23 @@ export function SupplierSettlements() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <BCCard className="p-6 space-y-3 bg-gradient-to-br from-gray-900 to-gray-950 text-white border-0">
           <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">
-            SETTLED & READY FOR WITHDRAWAL
+            {t.supplier.settlements.settledReady}
           </span>
           <div className="text-3xl font-bold font-mono text-white">$6,420.00</div>
           <div className="text-xs text-gray-400 pt-2 border-t border-gray-800 flex justify-between">
             <span>Next Auto-Payout: Sept 1</span>
             <button
               onClick={() => setIsWithdrawModalOpen(true)}
-              className="text-xs font-bold text-white hover:underline"
+              className="text-xs font-bold text-white hover:underline cursor-pointer"
             >
-              Withdraw Now →
+              {t.supplier.settlements.withdrawNow} →
             </button>
           </div>
         </BCCard>
 
         <BCCard className="p-6 space-y-3">
           <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">
-            PRIMARY PAYOUT METHOD
+            {t.supplier.settlements.primaryMethod}
           </span>
           <div className="flex items-center gap-2">
             <Building2 className="w-5 h-5 text-gray-700" />
@@ -92,7 +88,7 @@ export function SupplierSettlements() {
 
         <BCCard className="p-6 space-y-3">
           <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider">
-            TOTAL HISTORICAL EARNINGS
+            {t.supplier.settlements.totalHistorical}
           </span>
           <div className="text-2xl font-bold font-mono text-gray-950">$38,910.40</div>
           <div className="text-xs text-gray-500 pt-2 border-t border-gray-100 flex justify-between">
@@ -106,8 +102,8 @@ export function SupplierSettlements() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Settlement Ledger</h3>
-            <p className="text-xs text-gray-500">Historical transfers and cryptographically verifiable statements.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.supplier.settlements.ledgerTitle}</h3>
+            <p className="text-xs text-gray-500">{t.supplier.settlements.ledgerSubtitle}</p>
           </div>
         </div>
 
@@ -115,13 +111,13 @@ export function SupplierSettlements() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Settlement Batch</th>
-                <th className="pb-3 font-semibold">Date Settled</th>
-                <th className="pb-3 font-semibold">Payout Destination</th>
-                <th className="pb-3 font-semibold">Inference Tokens</th>
-                <th className="pb-3 font-semibold">Net Payout</th>
-                <th className="pb-3 font-semibold">Status</th>
-                <th className="pb-3 font-semibold text-right">Statement</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colBatch}</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colDate}</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colDestination}</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colTokens}</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colNetPayout}</th>
+                <th className="pb-3 font-semibold">{t.supplier.settlements.colStatus}</th>
+                <th className="pb-3 font-semibold text-right">{t.supplier.settlements.colStatement}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -163,7 +159,7 @@ export function SupplierSettlements() {
                   <td className="py-3.5 text-right">
                     <button
                       onClick={() => alert(`Downloading statement ${item.id}`)}
-                      className="text-blue-600 hover:text-blue-800 font-sans font-medium hover:underline flex items-center gap-1 ml-auto"
+                      className="text-blue-600 hover:text-blue-800 font-sans font-medium hover:underline flex items-center gap-1 ml-auto cursor-pointer"
                     >
                       <Download className="w-3 h-3" />
                       <span>PDF</span>
@@ -180,8 +176,8 @@ export function SupplierSettlements() {
       <BCModal
         isOpen={isWithdrawModalOpen}
         onClose={() => setIsWithdrawModalOpen(false)}
-        title="Request Early Settlement Payout"
-        subtitle="Transfer accumulated token revenue directly to your payout account."
+        title={t.supplier.settlements.modalTitle}
+        subtitle={t.supplier.settlements.modalSubtitle}
       >
         <div className="space-y-4 text-xs font-sans">
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200/80 space-y-2 font-mono">
@@ -205,14 +201,14 @@ export function SupplierSettlements() {
               size="sm"
               onClick={() => setIsWithdrawModalOpen(false)}
             >
-              Cancel
+              {t.common.cancel}
             </BCButton>
             <BCButton
               variant="primary"
               size="sm"
               onClick={handleWithdraw}
             >
-              Confirm Withdrawal
+              {t.supplier.settlements.modalConfirm}
             </BCButton>
           </div>
         </div>

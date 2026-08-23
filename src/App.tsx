@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
+import { I18nProvider } from '@/i18n/I18nContext';
 import { RoleProvider, useRole } from '@/context/RoleContext';
 import { Layout } from '@/components/Layout';
 
@@ -59,66 +60,68 @@ function DynamicRoot() {
 export default function App() {
   return (
     <BrowserRouter>
-      <RoleProvider>
-        <Layout>
-          <RouterRoutes>
-            {/* Dynamic Root Route */}
-            <Route path="/" element={<DynamicRoot />} />
+      <I18nProvider>
+        <RoleProvider>
+          <Layout>
+            <RouterRoutes>
+              {/* Dynamic Root Route */}
+              <Route path="/" element={<DynamicRoot />} />
 
-            {/* Public Pages */}
-            <Route path="/home" element={<Home />} />
-            <Route path="/landing" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              {/* Public Pages */}
+              <Route path="/home" element={<Home />} />
+              <Route path="/landing" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Buyer Routes */}
-            <Route path="/buyer" element={<BuyerOverview />} />
-            <Route path="/buyer/overview" element={<BuyerOverview />} />
-            <Route path="/buyer/playground" element={<BuyerPlayground />} />
-            <Route path="/buyer/marketplace" element={<BuyerMarketplace />} />
-            <Route path="/buyer/api-keys" element={<BuyerAPIKeys />} />
-            <Route path="/buyer/usage" element={<BuyerUsage />} />
-            <Route path="/buyer/billing" element={<BuyerBilling />} />
-            <Route path="/buyer/logs" element={<BuyerLogs />} />
+              {/* Buyer Routes */}
+              <Route path="/buyer" element={<BuyerOverview />} />
+              <Route path="/buyer/overview" element={<BuyerOverview />} />
+              <Route path="/buyer/playground" element={<BuyerPlayground />} />
+              <Route path="/buyer/marketplace" element={<BuyerMarketplace />} />
+              <Route path="/buyer/api-keys" element={<BuyerAPIKeys />} />
+              <Route path="/buyer/usage" element={<BuyerUsage />} />
+              <Route path="/buyer/billing" element={<BuyerBilling />} />
+              <Route path="/buyer/logs" element={<BuyerLogs />} />
 
-            {/* Aliases for Buyer Paths */}
-            <Route path="/playground" element={<BuyerPlayground />} />
-            <Route path="/marketplace" element={<BuyerMarketplace />} />
-            <Route path="/models" element={<BuyerMarketplace />} />
-            <Route path="/keys" element={<BuyerAPIKeys />} />
-            <Route path="/usage" element={<BuyerUsage />} />
-            <Route path="/billing" element={<BuyerBilling />} />
-            <Route path="/logs" element={<BuyerLogs />} />
+              {/* Aliases for Buyer Paths */}
+              <Route path="/playground" element={<BuyerPlayground />} />
+              <Route path="/marketplace" element={<BuyerMarketplace />} />
+              <Route path="/models" element={<BuyerMarketplace />} />
+              <Route path="/keys" element={<BuyerAPIKeys />} />
+              <Route path="/usage" element={<BuyerUsage />} />
+              <Route path="/billing" element={<BuyerBilling />} />
+              <Route path="/logs" element={<BuyerLogs />} />
 
-            {/* Supplier Routes */}
-            <Route path="/supplier" element={<SupplierOverview />} />
-            <Route path="/supplier/overview" element={<SupplierOverview />} />
-            <Route path="/supplier/resources" element={<SupplierResources />} />
-            <Route path="/supplier/deployments" element={<SupplierDeployments />} />
-            <Route path="/supplier/earnings" element={<SupplierEarnings />} />
-            <Route path="/supplier/settlements" element={<SupplierSettlements />} />
-            <Route path="/supplier/reliability" element={<SupplierReliability />} />
-            <Route path="/supplier/settings" element={<SupplierSettings />} />
+              {/* Supplier Routes */}
+              <Route path="/supplier" element={<SupplierOverview />} />
+              <Route path="/supplier/overview" element={<SupplierOverview />} />
+              <Route path="/supplier/resources" element={<SupplierResources />} />
+              <Route path="/supplier/deployments" element={<SupplierDeployments />} />
+              <Route path="/supplier/earnings" element={<SupplierEarnings />} />
+              <Route path="/supplier/settlements" element={<SupplierSettlements />} />
+              <Route path="/supplier/reliability" element={<SupplierReliability />} />
+              <Route path="/supplier/settings" element={<SupplierSettings />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminOverview />} />
-            <Route path="/admin/overview" element={<AdminOverview />} />
-            <Route path="/admin/supply" element={<AdminSupply />} />
-            <Route path="/admin/capacity" element={<AdminCapacity />} />
-            <Route path="/admin/demand" element={<AdminDemand />} />
-            <Route path="/admin/models" element={<AdminModels />} />
-            <Route path="/admin/revenue" element={<AdminRevenue />} />
-            <Route path="/admin/settlements" element={<AdminSettlements />} />
-            <Route path="/admin/suppliers" element={<AdminSuppliers />} />
-            <Route path="/admin/customers" element={<AdminCustomers />} />
-            <Route path="/admin/operations" element={<AdminOperations />} />
-            <Route path="/admin/settings" element={<AdminSettings />} />
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminOverview />} />
+              <Route path="/admin/overview" element={<AdminOverview />} />
+              <Route path="/admin/supply" element={<AdminSupply />} />
+              <Route path="/admin/capacity" element={<AdminCapacity />} />
+              <Route path="/admin/demand" element={<AdminDemand />} />
+              <Route path="/admin/models" element={<AdminModels />} />
+              <Route path="/admin/revenue" element={<AdminRevenue />} />
+              <Route path="/admin/settlements" element={<AdminSettlements />} />
+              <Route path="/admin/suppliers" element={<AdminSuppliers />} />
+              <Route path="/admin/customers" element={<AdminCustomers />} />
+              <Route path="/admin/operations" element={<AdminOperations />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
 
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </RouterRoutes>
-        </Layout>
-      </RoleProvider>
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </RouterRoutes>
+          </Layout>
+        </RoleProvider>
+      </I18nProvider>
     </BrowserRouter>
   );
 }

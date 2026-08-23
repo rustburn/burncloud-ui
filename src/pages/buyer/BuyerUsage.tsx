@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
 import {
-  LineChart as LineChartIcon,
-  Calendar,
-  Download,
-  Filter,
-  Layers,
-  Sparkles,
-  TrendingUp,
-  Cpu,
-  Clock
+  Download
 } from 'lucide-react';
 import {
   BCPageHeader,
   BCCard,
   BCButton,
-  BCBadge,
   BCMetric
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function BuyerUsage() {
+  const { t } = useTranslation();
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('7d');
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Token Usage & Analytics"
-        subtitle="Detailed consumption metrics, request velocity, and model-level cost distribution."
+        title={t.buyer.usage.title}
+        subtitle={t.buyer.usage.subtitle}
         conclusion={{
-          text: "Total 14.82M tokens processed in the last 7 days. Average TTFT latency: 142ms.",
+          text: t.buyer.usage.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -38,7 +31,7 @@ export function BuyerUsage() {
                 <button
                   key={r}
                   onClick={() => setTimeRange(r)}
-                  className={`px-3 py-1 rounded-lg uppercase font-mono ${
+                  className={`px-3 py-1 rounded-lg uppercase font-mono cursor-pointer ${
                     timeRange === r ? 'bg-gray-900 text-white font-bold' : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -48,7 +41,7 @@ export function BuyerUsage() {
             </div>
             <BCButton variant="secondary" size="sm">
               <Download className="w-3.5 h-3.5" />
-              <span>Export CSV</span>
+              <span>{t.buyer.usage.exportCsv}</span>
             </BCButton>
           </div>
         }
@@ -57,24 +50,24 @@ export function BuyerUsage() {
       {/* Primary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="Total Tokens (7D)"
+          label={t.buyer.usage.metricTokens7d}
           value="14.82M"
           unit="tokens"
           trend="+18.2% vs prior week"
           trendPositive={true}
         />
         <BCMetric
-          label="Total Cost (7D)"
+          label={t.buyer.usage.metricCost7d}
           value="$114.60"
-          subtitle="Pass-through rate"
+          subtitle={t.buyer.usage.passThroughSubtitle}
         />
         <BCMetric
-          label="Total Requests"
+          label={t.buyer.usage.metricTotalReqs}
           value="182,490"
           subtitle="99.99% success rate"
         />
         <BCMetric
-          label="p95 TTFT"
+          label={t.buyer.usage.metricP95Ttft}
           value="142 ms"
           trend="-24 ms reduction"
           trendPositive={true}
@@ -85,8 +78,8 @@ export function BuyerUsage() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Consumption by Model</h3>
-            <p className="text-xs text-gray-500">Breakdown of prompt vs completion tokens and total cost.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.buyer.usage.breakdownByModel}</h3>
+            <p className="text-xs text-gray-500">{t.buyer.usage.breakdownSubtitle}</p>
           </div>
         </div>
 
@@ -117,12 +110,12 @@ export function BuyerUsage() {
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Model</th>
-                <th className="pb-3 font-semibold">Prompt Tokens</th>
-                <th className="pb-3 font-semibold">Completion Tokens</th>
-                <th className="pb-3 font-semibold">Total Requests</th>
-                <th className="pb-3 font-semibold">Avg Latency</th>
-                <th className="pb-3 font-semibold text-right">Cost</th>
+                <th className="pb-3 font-semibold">{t.buyer.usage.colModel}</th>
+                <th className="pb-3 font-semibold">{t.buyer.usage.colPromptTokens}</th>
+                <th className="pb-3 font-semibold">{t.buyer.usage.colCompletionTokens}</th>
+                <th className="pb-3 font-semibold">{t.buyer.usage.colTotalRequests}</th>
+                <th className="pb-3 font-semibold">{t.buyer.usage.colAvgLatency}</th>
+                <th className="pb-3 font-semibold text-right">{t.buyer.usage.colCost}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 font-mono">

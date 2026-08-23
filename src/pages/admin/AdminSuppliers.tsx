@@ -1,29 +1,23 @@
 import React from 'react';
 import {
-  Building2,
-  Server,
-  ShieldCheck,
-  Award,
-  DollarSign,
-  Activity
-} from 'lucide-react';
-import {
   BCPageHeader,
-  BCMetric,
   BCCard,
   BCBadge,
   BCStatus
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminSuppliers() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Supplier Partner Directory"
-        subtitle="Manage compute provider accounts, KYC verification, SLA reliability tiers, and revenue shares."
+        title={t.admin.suppliers.title}
+        subtitle={t.admin.suppliers.subtitle}
         conclusion={{
-          text: "24 Active Supplier Partners. Average network reliability score: 99.1%.",
+          text: t.admin.suppliers.conclusion,
           type: 'healthy'
         }}
       />
@@ -32,8 +26,8 @@ export function AdminSuppliers() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Verified GPU Suppliers</h3>
-            <p className="text-xs text-gray-500">Tier levels determine default revenue share and scheduling priority.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.suppliers.directoryTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.suppliers.directorySubtitle}</p>
           </div>
         </div>
 
@@ -41,13 +35,13 @@ export function AdminSuppliers() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Supplier Partner</th>
-                <th className="pb-3 font-semibold">Verification Level</th>
-                <th className="pb-3 font-semibold">Connected GPUs</th>
-                <th className="pb-3 font-semibold">Uptime SLA</th>
-                <th className="pb-3 font-semibold">Rev Share</th>
-                <th className="pb-3 font-semibold">30D Earnings</th>
-                <th className="pb-3 font-semibold text-right">Status</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.colSupplier}</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.colVerification}</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.colConnectedGpus}</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.colUptimeSla}</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.colRevShare}</th>
+                <th className="pb-3 font-semibold">{t.admin.suppliers.col30dEarnings}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.suppliers.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

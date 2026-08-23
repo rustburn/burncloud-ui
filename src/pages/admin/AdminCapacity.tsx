@@ -1,37 +1,28 @@
 import React, { useState } from 'react';
 import {
-  Gauge,
-  Sliders,
-  Cpu,
-  Zap,
-  CheckCircle2,
-  AlertTriangle,
-  Layers,
-  Activity,
-  ArrowUpRight,
-  ShieldCheck
+  Zap
 } from 'lucide-react';
 import {
   BCPageHeader,
   BCMetric,
   BCCard,
   BCButton,
-  BCBadge,
   BCStatus
 } from '@/components/ui';
-import { WORKBENCH_MODELS } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminCapacity() {
+  const { t } = useTranslation();
   const [autoScaleEnabled, setAutoScaleEnabled] = useState(true);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Model Capacity & Headroom"
-        subtitle="Manage token throughput headroom, dynamic batch thresholds, and autonomous scaling policies."
+        title={t.admin.capacity.title}
+        subtitle={t.admin.capacity.subtitle}
         conclusion={{
-          text: "Global headroom is 34.2% above peak demand. DeepSeek V3 auto-scaled to 16 additional instances.",
+          text: t.admin.capacity.conclusion,
           type: 'healthy'
         }}
         actions={
@@ -42,7 +33,7 @@ export function AdminCapacity() {
               onClick={() => setAutoScaleEnabled(!autoScaleEnabled)}
             >
               <Zap className="w-3.5 h-3.5" />
-              <span>Autopilot Auto-Scaling: {autoScaleEnabled ? 'ACTIVE' : 'MANUAL'}</span>
+              <span>{t.admin.capacity.btnAutopilotScaling}: {autoScaleEnabled ? 'ACTIVE' : 'MANUAL'}</span>
             </BCButton>
           </div>
         }
@@ -51,25 +42,25 @@ export function AdminCapacity() {
       {/* Primary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="Global Headroom"
+          label={t.admin.capacity.metricGlobalHeadroom}
           value="34.2%"
           trend="Healthy safety margin"
           trendPositive={true}
         />
         <BCMetric
-          label="Peak Concurrency"
+          label={t.admin.capacity.metricPeakConcurrency}
           value="48,200"
           unit="tokens/s"
           subtitle="US-West (SJC) peak"
         />
         <BCMetric
-          label="Provisioned Instances"
+          label={t.admin.capacity.metricProvisionedReplicas}
           value="58"
           unit="replicas"
           subtitle="Across 6 frontier models"
         />
         <BCMetric
-          label="Target TTFT SLA"
+          label={t.admin.capacity.metricTargetLatency}
           value="< 200ms"
           status={<BCStatus status="Healthy" />}
         />
@@ -79,8 +70,8 @@ export function AdminCapacity() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Capacity Headroom by Model</h3>
-            <p className="text-xs text-gray-500">Live demand vs provisioned token generation capacity.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.capacity.headroomTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.capacity.headroomSubtitle}</p>
           </div>
         </div>
 
@@ -88,13 +79,13 @@ export function AdminCapacity() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Model</th>
-                <th className="pb-3 font-semibold">Provisioned Capacity</th>
-                <th className="pb-3 font-semibold">Active Demand</th>
-                <th className="pb-3 font-semibold">Headroom</th>
-                <th className="pb-3 font-semibold">p95 Latency</th>
-                <th className="pb-3 font-semibold">Scaling Action</th>
-                <th className="pb-3 font-semibold text-right">Status</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colModel}</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colProvisionedCapacity}</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colActiveDemand}</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colHeadroom}</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colP95Latency}</th>
+                <th className="pb-3 font-semibold">{t.admin.capacity.colScalingAction}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.capacity.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

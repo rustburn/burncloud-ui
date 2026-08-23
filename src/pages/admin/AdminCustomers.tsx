@@ -1,30 +1,23 @@
 import React from 'react';
 import {
-  Users,
-  CreditCard,
-  AlertTriangle,
-  CheckCircle2,
-  DollarSign,
-  TrendingUp,
-  Search
-} from 'lucide-react';
-import {
   BCPageHeader,
-  BCMetric,
   BCCard,
   BCBadge,
   BCStatus
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminCustomers() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Customer Tenant Management"
-        subtitle="Monitor buyer organization balances, burn velocity, payment security, and SLA contracts."
+        title={t.admin.customers.title}
+        subtitle={t.admin.customers.subtitle}
         conclusion={{
-          text: "1,420 Active Buyer Organizations. 0 delinquent accounts. Total prepaid escrow: $842,100.",
+          text: t.admin.customers.conclusion,
           type: 'healthy'
         }}
       />
@@ -33,8 +26,8 @@ export function AdminCustomers() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Enterprise Buyer Accounts</h3>
-            <p className="text-xs text-gray-500">Real-time balances and 30-day token spend.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.customers.accountsTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.customers.accountsSubtitle}</p>
           </div>
         </div>
 
@@ -42,13 +35,13 @@ export function AdminCustomers() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Tenant Organization</th>
-                <th className="pb-3 font-semibold">Contact Email</th>
-                <th className="pb-3 font-semibold">Active API Keys</th>
-                <th className="pb-3 font-semibold">30D Token Spend</th>
-                <th className="pb-3 font-semibold">Prepaid Escrow Balance</th>
-                <th className="pb-3 font-semibold">Credit Risk</th>
-                <th className="pb-3 font-semibold text-right">Account Status</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.colTenantOrg}</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.colContactEmail}</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.colActiveApiKeys}</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.col30dSpend}</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.colEscrowBalance}</th>
+                <th className="pb-3 font-semibold">{t.admin.customers.colCreditRisk}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.customers.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

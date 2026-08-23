@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import {
-  Settings,
   Key,
   Bell,
-  Building2,
   Copy,
   Check,
-  ShieldCheck,
-  Terminal,
   Save
 } from 'lucide-react';
 import {
@@ -16,8 +12,10 @@ import {
   BCButton,
   BCInput
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function SupplierSettings() {
+  const { t } = useTranslation();
   const [daemonToken] = useState('bc_node_auth_98a72b109e44f128');
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -35,10 +33,10 @@ export function SupplierSettings() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Supplier Settings"
-        subtitle="Node authentication credentials, webhook alerts, and operational preferences."
+        title={t.supplier.settings.title}
+        subtitle={t.supplier.settings.subtitle}
         conclusion={{
-          text: "Node daemon tokens are valid. Automated email and webhook alerts enabled.",
+          text: t.supplier.settings.conclusion,
           type: 'healthy'
         }}
       />
@@ -49,10 +47,10 @@ export function SupplierSettings() {
           <BCCard className="p-6 space-y-4">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-gray-700" />
-              <h3 className="text-sm font-bold text-gray-950">Node Daemon Authentication Token</h3>
+              <h3 className="text-sm font-bold text-gray-950">{t.supplier.settings.daemonTokenTitle}</h3>
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
-              Use this secret token when installing the BurnCloud node daemon on new compute hardware.
+              {t.supplier.settings.daemonTokenDesc}
             </p>
 
             <div className="p-3 bg-gray-950 text-gray-100 rounded-xl font-mono text-xs flex items-center justify-between">
@@ -67,7 +65,7 @@ export function SupplierSettings() {
                 }}
               >
                 {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                <span>{copied ? 'Copied' : 'Copy'}</span>
+                <span>{copied ? t.common.copied : t.common.copy}</span>
               </BCButton>
             </div>
 
@@ -85,12 +83,12 @@ export function SupplierSettings() {
           <BCCard className="p-6 space-y-4">
             <div className="flex items-center gap-2">
               <Bell className="w-4 h-4 text-gray-700" />
-              <h3 className="text-sm font-bold text-gray-950">Operational Alert Webhooks</h3>
+              <h3 className="text-sm font-bold text-gray-950">{t.supplier.settings.alertsTitle}</h3>
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs">
               <div className="space-y-1.5">
-                <label className="font-semibold text-gray-700">Urgent Incident Email</label>
+                <label className="font-semibold text-gray-700">{t.supplier.settings.urgentEmail}</label>
                 <BCInput
                   type="email"
                   value={notificationEmail}
@@ -100,7 +98,7 @@ export function SupplierSettings() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-semibold text-gray-700">Incident Webhook URL</label>
+                <label className="font-semibold text-gray-700">{t.supplier.settings.webhookUrl}</label>
                 <BCInput
                   type="url"
                   value={webhookUrl}
@@ -115,7 +113,7 @@ export function SupplierSettings() {
               <div className="pt-2 flex justify-end">
                 <BCButton type="submit" variant="primary" size="sm">
                   {saved ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Save className="w-3.5 h-3.5" />}
-                  <span>{saved ? 'Saved Changes' : 'Save Preferences'}</span>
+                  <span>{saved ? t.common.saved : t.supplier.settings.savePreferences}</span>
                 </BCButton>
               </div>
             </form>

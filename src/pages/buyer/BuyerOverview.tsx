@@ -3,13 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   DollarSign,
   CreditCard,
-  CheckCircle2,
-  Activity,
   Zap,
   ArrowRight,
-  Sparkles,
-  ArrowUpRight,
-  TrendingUp,
   Key,
   Terminal,
   Store,
@@ -25,10 +20,12 @@ import {
 } from '@/components/ui';
 import { useRole } from '@/context/RoleContext';
 import { WORKBENCH_MODELS } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function BuyerOverview() {
   const navigate = useNavigate();
   const { balance, todaySpend } = useRole();
+  const { t } = useTranslation();
 
   const isLowBalance = balance < 20;
 
@@ -36,12 +33,12 @@ export function BuyerOverview() {
     <div className="space-y-6">
       {/* 1. Page Header & Intelligent Conclusion */}
       <BCPageHeader
-        title="Buyer Overview"
-        subtitle="Real-time model API consumption, prepaid balance, and service availability."
+        title={t.buyer.overview.title}
+        subtitle={t.buyer.overview.subtitle}
         conclusion={{
           text: isLowBalance
-            ? "Your prepaid balance is running low. Please top up to prevent API request throttling."
-            : "Your API usage is healthy. All upstream model endpoints are operating within normal latency SLAs.",
+            ? t.buyer.overview.conclusionWarning
+            : t.buyer.overview.conclusionHealthy,
           type: isLowBalance ? 'warning' : 'healthy'
         }}
         actions={
@@ -52,7 +49,7 @@ export function BuyerOverview() {
               onClick={() => navigate('/buyer/playground')}
             >
               <Terminal className="w-3.5 h-3.5" />
-              <span>Open Playground</span>
+              <span>{t.buyer.overview.openPlayground}</span>
             </BCButton>
             <BCButton
               variant="primary"
@@ -60,7 +57,7 @@ export function BuyerOverview() {
               onClick={() => navigate('/buyer/marketplace')}
             >
               <Store className="w-3.5 h-3.5" />
-              <span>Browse Marketplace</span>
+              <span>{t.buyer.overview.browseMarketplace}</span>
             </BCButton>
           </div>
         }
@@ -70,16 +67,16 @@ export function BuyerOverview() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* 1: Today Spend */}
         <BCMetric
-          label="Today Spend"
+          label={t.buyer.overview.metricTodaySpend}
           value={`$${todaySpend.toFixed(2)}`}
           trend="+8.4% vs yesterday"
           trendPositive={false}
-          subtitle="Pass-through model pricing"
+          subtitle={t.buyer.overview.metricTodaySpendSub}
         />
 
         {/* 2: Balance */}
         <BCMetric
-          label="Balance"
+          label={t.buyer.overview.metricBalance}
           value={`$${balance.toFixed(2)}`}
           status={
             isLowBalance ? (
@@ -88,25 +85,25 @@ export function BuyerOverview() {
               <BCBadge variant="success" size="sm">HEALTHY</BCBadge>
             )
           }
-          subtitle="Prepaid account credits"
+          subtitle={t.buyer.overview.metricBalanceSub}
         />
 
         {/* 3: API Availability */}
         <BCMetric
-          label="API Availability"
+          label={t.buyer.overview.metricApiAvailability}
           value="99.99%"
           status={<BCStatus status="Healthy" />}
-          subtitle="Multi-region auto failover active"
+          subtitle={t.buyer.overview.metricApiAvailabilitySub}
         />
 
         {/* 4: Tokens Today */}
         <BCMetric
-          label="Tokens Today"
+          label={t.buyer.overview.metricTokensToday}
           value="1.84M"
           unit="tokens"
           trend="85.4 req/min peak"
           trendPositive={true}
-          subtitle="620K prompt • 1.22M completion"
+          subtitle={t.buyer.overview.metricTokensTodaySub}
         />
       </div>
 
@@ -116,9 +113,9 @@ export function BuyerOverview() {
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-sm font-bold text-amber-950">Prepaid balance below $20.00</h4>
+              <h4 className="text-sm font-bold text-amber-950">{t.buyer.overview.attentionTitle}</h4>
               <p className="text-xs text-amber-800 mt-0.5">
-                At your current burn rate (~$14.28/day), your API requests may experience rate limits within 24 hours.
+                {t.buyer.overview.attentionDesc}
               </p>
             </div>
           </div>
@@ -129,7 +126,7 @@ export function BuyerOverview() {
             className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
           >
             <CreditCard className="w-3.5 h-3.5" />
-            <span>Top Up Balance</span>
+            <span>{t.buyer.overview.attentionTopUpBtn}</span>
           </BCButton>
         </div>
       )}
@@ -138,8 +135,8 @@ export function BuyerOverview() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Models in Use</h3>
-            <p className="text-xs text-gray-500">Active model API routes serving your application requests.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.buyer.overview.modelsInUseTitle}</h3>
+            <p className="text-xs text-gray-500">{t.buyer.overview.modelsInUseDesc}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -147,7 +144,7 @@ export function BuyerOverview() {
             onClick={() => navigate('/buyer/marketplace')}
             className="text-xs"
           >
-            <span>Explore all models</span>
+            <span>{t.buyer.overview.exploreAllModels}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </BCButton>
         </div>
@@ -156,13 +153,13 @@ export function BuyerOverview() {
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Model</th>
-                <th className="pb-3 font-semibold">Selected Tier</th>
-                <th className="pb-3 font-semibold">Today Tokens</th>
-                <th className="pb-3 font-semibold">p95 Latency</th>
-                <th className="pb-3 font-semibold">Today Cost</th>
-                <th className="pb-3 font-semibold">Service Status</th>
-                <th className="pb-3 font-semibold text-right">Action</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colModel}</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colSelectedTier}</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colTodayTokens}</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colP95Latency}</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colTodayCost}</th>
+                <th className="pb-3 font-semibold">{t.buyer.overview.colServiceStatus}</th>
+                <th className="pb-3 font-semibold text-right">{t.buyer.overview.colAction}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -218,9 +215,9 @@ export function BuyerOverview() {
                   <td className="py-3.5 text-right">
                     <button
                       onClick={() => navigate('/buyer/playground')}
-                      className="text-blue-600 hover:text-blue-800 font-semibold font-mono text-xs hover:underline"
+                      className="text-blue-600 hover:text-blue-800 font-semibold font-mono text-xs hover:underline cursor-pointer"
                     >
-                      Test in Playground →
+                      {t.buyer.overview.testInPlayground}
                     </button>
                   </td>
                 </tr>
@@ -234,8 +231,8 @@ export function BuyerOverview() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Recent Activity</h3>
-            <p className="text-xs text-gray-500">Key account events, recharge confirmations, and routing notices.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.buyer.overview.recentActivityTitle}</h3>
+            <p className="text-xs text-gray-500">{t.buyer.overview.recentActivityDesc}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -243,7 +240,7 @@ export function BuyerOverview() {
             onClick={() => navigate('/buyer/logs')}
             className="text-xs"
           >
-            <span>View Full Request Logs</span>
+            <span>{t.buyer.overview.viewFullLogs}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </BCButton>
         </div>

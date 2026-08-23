@@ -1,33 +1,24 @@
 import React from 'react';
 import {
-  Cpu,
-  Plus,
-  Sliders,
-  DollarSign,
-  CheckCircle2,
-  AlertTriangle,
-  ArrowRight,
-  ShieldCheck
-} from 'lucide-react';
-import {
   BCPageHeader,
-  BCMetric,
   BCCard,
-  BCButton,
   BCBadge,
   BCStatus
 } from '@/components/ui';
 import { WORKBENCH_MODELS } from '@/data/workbenchData';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminModels() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Master Model Catalog"
-        subtitle="Configure pass-through pricing, routing priority, and operational health overrides."
+        title={t.admin.models.title}
+        subtitle={t.admin.models.subtitle}
         conclusion={{
-          text: "6 Master models configured. Zero markup policy enforced on open-weights frontier LLMs.",
+          text: t.admin.models.conclusion,
           type: 'healthy'
         }}
       />
@@ -36,8 +27,8 @@ export function AdminModels() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Active Catalog Endpoints</h3>
-            <p className="text-xs text-gray-500">Global routing policies and token unit economics.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.models.catalogTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.models.catalogSubtitle}</p>
           </div>
         </div>
 
@@ -45,13 +36,13 @@ export function AdminModels() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Model Name</th>
-                <th className="pb-3 font-semibold">Pass-Through In / Out Rate</th>
-                <th className="pb-3 font-semibold">Context</th>
-                <th className="pb-3 font-semibold">Routing Tiers</th>
-                <th className="pb-3 font-semibold">Target p95 SLA</th>
-                <th className="pb-3 font-semibold">30D Availability</th>
-                <th className="pb-3 font-semibold text-right">Status</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colModel}</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colPassThroughRate}</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colContextWindow}</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colRoutingTiers}</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colTargetP95}</th>
+                <th className="pb-3 font-semibold">{t.admin.models.colAvailability}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.models.colStatus}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -64,9 +55,9 @@ export function AdminModels() {
                   <td className="py-3.5 text-gray-600">{m.contextWindow}</td>
                   <td className="py-3.5">
                     <div className="flex gap-1">
-                      {m.supportedTiers.map(t => (
-                        <BCBadge key={t} variant={t === 'Performance' ? 'accent' : 'neutral'} size="sm">
-                          {t}
+                      {m.supportedTiers.map(tier => (
+                        <BCBadge key={tier} variant={tier === 'Performance' ? 'accent' : 'neutral'} size="sm">
+                          {tier}
                         </BCBadge>
                       ))}
                     </div>

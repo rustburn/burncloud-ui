@@ -1,12 +1,6 @@
 import React from 'react';
 import {
-  DollarSign,
-  TrendingUp,
-  PieChart,
-  ArrowUpRight,
-  Download,
-  Calendar,
-  Layers
+  Download
 } from 'lucide-react';
 import {
   BCPageHeader,
@@ -14,22 +8,25 @@ import {
   BCCard,
   BCButton
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminRevenue() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Financial Economics & Margins"
-        subtitle="Platform GMV, Supplier COGS, Net Margin, and model profitability breakdown."
+        title={t.admin.revenue.title}
+        subtitle={t.admin.revenue.subtitle}
         conclusion={{
-          text: "Gross GMV this month: $384,200. Net Platform Margin: 32.4% ($124,480 net profit).",
+          text: t.admin.revenue.conclusion,
           type: 'healthy'
         }}
         actions={
           <BCButton variant="secondary" size="sm">
             <Download className="w-3.5 h-3.5" />
-            <span>Export Financial Ledger</span>
+            <span>{t.admin.revenue.exportLedger}</span>
           </BCButton>
         }
       />
@@ -37,24 +34,24 @@ export function AdminRevenue() {
       {/* Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BCMetric
-          label="August Platform GMV"
+          label={t.admin.revenue.metricPlatformGmvMonth}
           value="$384,200"
           trend="+28.4% MoM"
           trendPositive={true}
         />
         <BCMetric
-          label="Supplier COGS"
+          label={t.admin.revenue.metricSupplierCogs}
           value="$259,720"
           subtitle="67.6% of GMV payouts"
         />
         <BCMetric
-          label="Net Platform Margin"
+          label={t.admin.revenue.metricNetPlatformMargin}
           value="$124,480"
           trend="32.4% Net Margin"
           trendPositive={true}
         />
         <BCMetric
-          label="Prepaid Float Held"
+          label={t.admin.revenue.metricPrepaidFloat}
           value="$842,100"
           subtitle="Prepaid customer credits"
         />
@@ -64,8 +61,8 @@ export function AdminRevenue() {
       <BCCard className="p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-gray-950">Profitability by Model Endpoint</h3>
-            <p className="text-xs text-gray-500">Gross revenue vs supplier compute cost.</p>
+            <h3 className="text-base font-bold text-gray-950">{t.admin.revenue.profitabilityTitle}</h3>
+            <p className="text-xs text-gray-500">{t.admin.revenue.profitabilitySubtitle}</p>
           </div>
         </div>
 
@@ -73,12 +70,12 @@ export function AdminRevenue() {
           <table className="w-full text-left text-xs font-mono">
             <thead>
               <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">Model Endpoint</th>
-                <th className="pb-3 font-semibold">Volume (Tokens)</th>
-                <th className="pb-3 font-semibold">Gross GMV</th>
-                <th className="pb-3 font-semibold">Supplier COGS</th>
-                <th className="pb-3 font-semibold">Net Profit</th>
-                <th className="pb-3 font-semibold text-right">Margin %</th>
+                <th className="pb-3 font-semibold">{t.admin.revenue.colModelEndpoint}</th>
+                <th className="pb-3 font-semibold">{t.admin.revenue.colVolumeTokens}</th>
+                <th className="pb-3 font-semibold">{t.admin.revenue.colGrossGmv}</th>
+                <th className="pb-3 font-semibold">{t.admin.revenue.colSupplierCogs}</th>
+                <th className="pb-3 font-semibold">{t.admin.revenue.colNetProfit}</th>
+                <th className="pb-3 font-semibold text-right">{t.admin.revenue.colMarginPercent}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

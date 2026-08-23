@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Settings,
   Save,
-  Check,
-  Shield,
-  Percent,
-  Sliders
+  Check
 } from 'lucide-react';
 import {
   BCPageHeader,
@@ -13,8 +9,10 @@ import {
   BCButton,
   BCInput
 } from '@/components/ui';
+import { useTranslation } from '@/i18n/I18nContext';
 
 export function AdminSettings() {
+  const { t } = useTranslation();
   const [baseRevShare, setBaseRevShare] = useState('75.0');
   const [l4RevShare, setL4RevShare] = useState('85.0');
   const [safetyMarginPct, setSafetyMarginPct] = useState('25.0');
@@ -30,10 +28,10 @@ export function AdminSettings() {
     <div className="space-y-6">
       {/* Header */}
       <BCPageHeader
-        title="Platform Global Policies"
-        subtitle="Configure system-wide revenue share splits, Autopilot safety limits, and billing tolerances."
+        title={t.admin.settings.title}
+        subtitle={t.admin.settings.subtitle}
         conclusion={{
-          text: "Global policies synchronized across all edge routing nodes.",
+          text: t.admin.settings.conclusion,
           type: 'healthy'
         }}
       />
@@ -41,7 +39,7 @@ export function AdminSettings() {
       <BCCard className="p-6 max-w-2xl space-y-5">
         <form onSubmit={handleSave} className="space-y-4 text-xs font-sans">
           <div className="space-y-1.5">
-            <label className="font-semibold text-gray-700">Base Supplier Revenue Share (%)</label>
+            <label className="font-semibold text-gray-700">{t.admin.settings.baseRevShare}</label>
             <BCInput
               type="number"
               value={baseRevShare}
@@ -56,7 +54,7 @@ export function AdminSettings() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="font-semibold text-gray-700">Strategic L4 Supplier Revenue Share (%)</label>
+            <label className="font-semibold text-gray-700">{t.admin.settings.l4RevShare}</label>
             <BCInput
               type="number"
               value={l4RevShare}
@@ -68,7 +66,7 @@ export function AdminSettings() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="font-semibold text-gray-700">Autopilot Target Headroom Safety Margin (%)</label>
+            <label className="font-semibold text-gray-700">{t.admin.settings.targetHeadroom}</label>
             <BCInput
               type="number"
               value={safetyMarginPct}
@@ -85,7 +83,7 @@ export function AdminSettings() {
           <div className="pt-3 border-t border-gray-100 flex justify-end">
             <BCButton type="submit" variant="primary" size="sm">
               {saved ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Save className="w-3.5 h-3.5" />}
-              <span>{saved ? 'Saved Policies' : 'Save Global Policies'}</span>
+              <span>{saved ? t.common.saved : t.admin.settings.savePolicies}</span>
             </BCButton>
           </div>
         </form>
