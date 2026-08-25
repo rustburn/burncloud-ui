@@ -7,6 +7,9 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
+    "rust:dev": "cargo run --manifest-path rust-ui/Cargo.toml",
+    "rust:check": "cargo check --manifest-path rust-ui/Cargo.toml",
+    "rust:test": "cargo test --manifest-path rust-ui/Cargo.toml",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
