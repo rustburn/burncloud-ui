@@ -49,7 +49,7 @@ export function BuyerBilling() {
         }}
         actions={
           <BCButton
-            variant="primary"
+            variant="brand"
             size="sm"
             onClick={() => setIsTopUpModalOpen(true)}
           >
@@ -105,7 +105,7 @@ export function BuyerBilling() {
             <span>Payment: Visa ending in 4242</span>
             <button
               onClick={() => setAutoRechargeEnabled(!autoRechargeEnabled)}
-              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
+              className="text-xs font-semibold text-zinc-900 hover:text-zinc-600 hover:underline cursor-pointer"
             >
               Toggle
             </button>
@@ -189,7 +189,7 @@ export function BuyerBilling() {
                   <td className="py-3.5 text-right">
                     <button
                       onClick={() => alert(`Downloading PDF statement for ${inv.id}`)}
-                      className="text-blue-600 hover:text-blue-800 font-semibold hover:underline flex items-center gap-1 ml-auto font-sans cursor-pointer"
+                      className="text-zinc-900 hover:text-zinc-600 font-semibold hover:underline flex items-center gap-1 ml-auto font-sans cursor-pointer"
                     >
                       <Download className="w-3 h-3" />
                       <span>PDF</span>

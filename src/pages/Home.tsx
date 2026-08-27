@@ -174,46 +174,53 @@ export function Home() {
       </section>
 
       {/* Interactive Gateway Demo Card */}
-      <section className="py-12 bg-white border-y border-gray-200/60">
+      <section className="py-16 bg-white border-y border-gray-200/60">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-8">
+          <div className="text-center mb-10">
             <Badge variant="brand" className="mb-2 uppercase tracking-wider">{t.publicPages.home.liveDemoBadge}</Badge>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-950 tracking-tight">
               {t.publicPages.home.liveDemoTitle}
             </h2>
-            <p className="text-sm text-gray-500 mt-1 max-w-xl mx-auto">
+            <p className="text-sm text-gray-500 mt-1 max-w-xl mx-auto font-medium">
               {t.publicPages.home.liveDemoSubtitle}
             </p>
           </div>
 
-          <Card className="p-6 md:p-8 bg-gray-950 text-white shadow-2xl rounded-2xl overflow-hidden border-gray-800 relative">
-            {/* Model Selector Pills */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-800">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-400 font-mono uppercase tracking-wider">{t.publicPages.home.selectModel}</span>
-                {['claude-fable-5', 'gpt-4o-nitro', 'deepseek-r1-enclave', 'llama-3.3-70b'].map((model) => (
-                  <button
-                    key={model}
-                    onClick={() => simulateRoute(model)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-                      activeModel === model 
-                        ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20' 
-                        : 'bg-gray-900 text-gray-400 hover:text-white hover:bg-gray-800'
-                    }`}
-                  >
-                    {model}
-                  </button>
-                ))}
+          <Card className="p-6 md:p-8 bg-gray-950 text-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] rounded-3xl overflow-hidden border border-gray-800 relative">
+            {/* Top Bar with Hardware Enclave Indicator & macOS Micro Dots */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-800/80">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 pr-2 border-r border-gray-800">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                </div>
+                <span className="text-[11px] text-gray-400 font-mono uppercase tracking-wider font-semibold">{t.publicPages.home.selectModel}</span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {['claude-fable-5', 'gpt-4o-nitro', 'deepseek-r1-enclave', 'llama-3.3-70b'].map((model) => (
+                    <button
+                      key={model}
+                      onClick={() => simulateRoute(model)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
+                        activeModel === model 
+                          ? 'bg-white text-gray-950 font-bold shadow-md shadow-white/10 ring-1 ring-white/30' 
+                          : 'bg-gray-900 text-gray-400 hover:text-white hover:bg-gray-850'
+                      }`}
+                    >
+                      {model}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 text-xs font-mono text-green-400 bg-green-950/60 border border-green-800/60 px-3 py-1 rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                  <span>{t.publicPages.home.latencyLabel}: {simulatedLatency}ms</span>
+              <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="font-semibold">{t.publicPages.home.latencyLabel}: {simulatedLatency}ms</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400 bg-blue-950/60 border border-blue-800/60 px-3 py-1 rounded-full">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>{t.publicPages.home.tpmSignedLabel}</span>
+                <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-200 bg-zinc-850 border border-zinc-700/80 px-3 py-1 rounded-full shadow-xs">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="font-semibold">{t.publicPages.home.tpmSignedLabel}</span>
                 </div>
               </div>
             </div>
@@ -221,15 +228,15 @@ export function Home() {
             {/* Code / JSON Display */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column: Request */}
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-mono text-gray-400">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 font-semibold text-gray-300">
                     <Terminal className="w-3.5 h-3.5 text-amber-400" />
                     {t.publicPages.home.curlSnippetTitle}
                   </span>
-                  <span className="text-green-400">HTTP 200 OK</span>
+                  <span className="text-emerald-400 font-bold">HTTP 200 OK</span>
                 </div>
-                <pre className="bg-gray-900 p-4 rounded-xl text-xs font-mono text-gray-300 overflow-x-auto border border-gray-800 leading-relaxed">
+                <pre className="bg-gray-900/90 p-4 rounded-2xl text-xs font-mono text-gray-300 overflow-x-auto border border-gray-800/90 leading-relaxed shadow-inner">
 {`curl -X POST https://gateway.burncloud.io/v1/chat \\
   -H "Authorization: Bearer bc_live_key_918f" \\
   -H "X-BurnCloud-Attest: TPM_ENCLAVE_STRICT" \\
@@ -241,15 +248,15 @@ export function Home() {
               </div>
 
               {/* Right Column: Hardware Receipt */}
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-mono text-gray-400">
-                  <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
+                  <span className="flex items-center gap-1.5 font-semibold text-gray-300">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                     {t.publicPages.home.returnedReceiptTitle}
                   </span>
-                  <span className="text-blue-400">{t.publicPages.home.verifiedSiliconBadge}</span>
+                  <span className="text-emerald-400 font-semibold">{t.publicPages.home.verifiedSiliconBadge}</span>
                 </div>
-                <pre className="bg-gray-900 p-4 rounded-xl text-xs font-mono text-gray-300 overflow-x-auto border border-gray-800 leading-relaxed">
+                <pre className="bg-gray-900/90 p-4 rounded-2xl text-xs font-mono text-gray-300 overflow-x-auto border border-gray-800/90 leading-relaxed shadow-inner">
 {`{
   "burncloud_trace_id": "tr_8f3c11_${activeModel.replace(/-/g, '_')}",
   "hardware_signature": "0x98f42ba7...enclave",
@@ -262,13 +269,14 @@ export function Home() {
             </div>
 
             {/* Bottom Bar */}
-            <div className="mt-6 pt-4 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+            <div className="mt-6 pt-4 border-t border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-                <span>{t.publicPages.home.nitroGuaranteedText}</span>
+                <span className="font-medium text-gray-300">{t.publicPages.home.nitroGuaranteedText}</span>
               </div>
-              <Link to="/buyer/playground" className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
+              <Link to="/buyer/playground" className="text-white hover:text-gray-200 font-semibold flex items-center gap-1 transition-colors">
                 {t.publicPages.home.openPlaygroundLink}
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </Card>
@@ -292,7 +300,7 @@ export function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="p-7 space-y-4 hover:border-gray-300 transition-all duration-200 hover:-translate-y-1">
-              <div className="w-12 h-12 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
+              <div className="w-12 h-12 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center text-white shadow-2xs">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-gray-950">{t.publicPages.home.pillar1Title}</h3>
@@ -371,7 +379,7 @@ export function Home() {
             <Card className="p-6 bg-[#F9FAFB] border-gray-200/80 space-y-6">
               <div className="flex items-center justify-between border-b border-gray-200 pb-4">
                 <div className="flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-blue-600" />
+                  <Activity className="w-5 h-5 text-gray-800" />
                   <span className="font-bold text-sm text-gray-900">{t.publicPages.home.activeRoutingNodes}</span>
                 </div>
                 <Badge variant="success">{t.publicPages.home.allSystemsNominal}</Badge>
@@ -398,7 +406,7 @@ export function Home() {
               </div>
 
               <div className="pt-4 border-t border-gray-200 text-center">
-                <Link to="/buyer/marketplace" className="text-xs font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1">
+                <Link to="/buyer/marketplace" className="text-xs font-semibold text-gray-900 hover:text-gray-600 inline-flex items-center gap-1">
                   {t.publicPages.home.manageRoutesLink}
                 </Link>
               </div>

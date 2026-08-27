@@ -74,8 +74,8 @@ export function Login() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center space-y-2"
           >
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-medium font-mono mb-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-800 text-[11px] font-semibold font-mono mb-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>{t.publicPages.login.hardwarePortal}</span>
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-950">
@@ -132,7 +132,7 @@ export function Login() {
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <label className="font-semibold text-gray-700">{t.publicPages.login.password}</label>
-                    <a href="#forgot" onClick={(e) => { e.preventDefault(); alert("A password reset token has been issued to your registered hardware key."); }} className="text-blue-600 hover:underline font-medium">
+                    <a href="#forgot" onClick={(e) => { e.preventDefault(); alert("A password reset token has been issued to your registered hardware key."); }} className="text-zinc-900 hover:text-zinc-600 hover:underline font-semibold">
                       {t.publicPages.login.forgot}
                     </a>
                   </div>
@@ -163,8 +163,8 @@ export function Login() {
                 </div>
 
                 {statusMessage && (
-                  <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs text-blue-800 flex items-center gap-2 font-mono">
-                    <div className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin shrink-0" />
+                  <div className="p-3 bg-zinc-100 border border-zinc-200/90 rounded-xl text-xs text-zinc-900 flex items-center gap-2 font-mono">
+                    <div className="w-3.5 h-3.5 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin shrink-0" />
                     <span>{statusMessage}</span>
                   </div>
                 )}

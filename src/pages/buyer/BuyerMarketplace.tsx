@@ -118,18 +118,22 @@ export function BuyerMarketplace() {
               </div>
 
               {/* Price & Context Strip */}
-              <div className="p-3 rounded-xl bg-gray-50/80 border border-gray-100 flex items-center justify-between font-mono text-xs">
+              <div className="p-3.5 rounded-2xl bg-gray-50/90 border border-gray-100/90 flex items-center justify-between font-mono text-xs shadow-2xs">
                 <div>
-                  <span className="text-[10px] text-gray-400 block uppercase">{t.buyer.marketplace.inputPrice} / {t.buyer.marketplace.outputPrice}</span>
-                  <span className="font-bold text-gray-900">
-                    ${model.inputPrice1M} <span className="text-gray-400 font-normal">/</span> ${model.outputPrice1M}
+                  <span className="text-[10px] font-bold text-gray-400 block uppercase tracking-wider">
+                    {t.buyer.marketplace.inputPrice} / {t.buyer.marketplace.outputPrice}
                   </span>
-                  <span className="text-[9px] text-gray-400 block">{t.buyer.marketplace.perMillionTokens}</span>
+                  <div className="pt-0.5">
+                    <span className="font-extrabold text-sm text-gray-950 tabular-nums">${model.inputPrice1M}</span>
+                    <span className="text-gray-400 font-normal px-1">/</span>
+                    <span className="font-extrabold text-sm text-gray-950 tabular-nums">${model.outputPrice1M}</span>
+                  </div>
+                  <span className="text-[9px] text-gray-400 block mt-0.5 font-sans font-medium">{t.buyer.marketplace.perMillionTokens}</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-[10px] text-gray-400 block uppercase">CONTEXT</span>
-                  <span className="font-bold text-gray-900">{model.contextWindow}</span>
-                  <span className="text-[9px] text-emerald-600 block">Sub-{model.p95LatencyMs}ms TTFT</span>
+                <div className="text-right pl-3 border-l border-gray-200/60">
+                  <span className="text-[10px] font-bold text-gray-400 block uppercase tracking-wider">CONTEXT</span>
+                  <span className="font-extrabold text-sm text-gray-950 block pt-0.5 tabular-nums">{model.contextWindow}</span>
+                  <span className="text-[9px] font-bold text-emerald-600 block mt-0.5">Sub-{model.p95LatencyMs}ms TTFT</span>
                 </div>
               </div>
 
@@ -158,7 +162,7 @@ export function BuyerMarketplace() {
               </button>
 
               <BCButton
-                variant="primary"
+                variant="brand"
                 size="sm"
                 onClick={() => {
                   navigate('/buyer/playground');
@@ -237,7 +241,7 @@ export function BuyerMarketplace() {
               <h4 className="text-xs font-bold text-gray-900 uppercase font-mono tracking-wider">
                 Recommended For
               </h4>
-              <p className="text-xs text-gray-600 bg-blue-50/60 p-3 rounded-xl border border-blue-100 leading-relaxed">
+              <p className="text-xs text-zinc-700 bg-zinc-50/90 p-3.5 rounded-2xl border border-zinc-200/80 leading-relaxed font-medium">
                 {selectedModel.recommendedFor}
               </p>
             </div>

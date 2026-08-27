@@ -176,10 +176,10 @@ export function Team() {
         <Card className="p-5 flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-[12px] font-semibold text-gray-400 uppercase tracking-wider">Role Access Standard</span>
-            <p className="text-2xl font-bold text-blue-600">RBAC Enabled</p>
+            <p className="text-2xl font-bold text-gray-900 font-sans tracking-tight">RBAC Enabled</p>
           </div>
-          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100">
-            <ShieldCheck className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center border border-zinc-200">
+            <ShieldCheck className="w-5 h-5 text-zinc-900" />
           </div>
         </Card>
       </div>

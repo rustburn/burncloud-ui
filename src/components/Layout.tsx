@@ -169,24 +169,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen bg-[#F9FAFB] text-gray-900 overflow-hidden font-sans select-none">
       {/* Sidebar */}
-      <aside className="w-[230px] flex flex-col border-r border-gray-200/90 bg-[#F9FAFB] flex-shrink-0">
+      <aside className="w-[240px] flex flex-col border-r border-gray-200/90 bg-[#F9FAFB]/95 backdrop-blur-sm flex-shrink-0 z-20">
         {/* Brand & Role Switcher */}
-        <div className="p-3 border-b border-gray-200/70">
+        <div className="p-3.5 border-b border-gray-200/80">
           <div className="relative">
             <button
               onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-              className="w-full flex items-center justify-between p-2 rounded-xl bg-white border border-gray-200/90 hover:border-gray-300 shadow-xs transition-all text-left group"
+              className="w-full flex items-center justify-between p-2.5 rounded-2xl bg-white border border-gray-200/90 hover:border-gray-300 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all text-left group cursor-pointer active:scale-[0.99]"
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <Logo className="w-6 h-6 flex-shrink-0" />
+                <Logo className="w-6.5 h-6.5 flex-shrink-0" />
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-[13px] tracking-tight text-gray-950">BurnCloud</span>
-                    <span className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0", roleMeta[role].color)} />
+                    <span className="font-extrabold text-[13px] tracking-tight text-gray-950">BurnCloud</span>
+                    <span className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0 ring-2 ring-white", roleMeta[role].color)} />
                   </div>
-                  <div className="text-[11px] font-mono font-medium text-gray-500 truncate flex items-center gap-1">
+                  <div className="text-[11px] font-mono font-semibold text-gray-500 truncate flex items-center gap-1">
                     <span>{roleMeta[role].label}</span>
-                    <span className="text-[9px] text-gray-400">• Workspace</span>
+                    <span className="text-[9px] text-gray-400">• Pro</span>
                   </div>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   className="fixed inset-0 z-30"
                   onClick={() => setRoleDropdownOpen(false)}
                 />
-                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl z-40 p-1.5 space-y-1">
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200/90 rounded-2xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] z-40 p-1.5 space-y-1">
                   <div className="px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400">
                     {t.common.switchWorkspaceRole}
                   </div>
@@ -212,28 +212,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         setRoleDropdownOpen(false);
                       }}
                       className={cn(
-                        "w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors text-left",
+                        "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs transition-all text-left cursor-pointer",
                         role === r
-                          ? "bg-gray-900 text-white font-medium shadow-xs"
+                          ? "bg-gray-950 text-white font-semibold shadow-xs"
                           : "text-gray-700 hover:bg-gray-100"
                       )}
                     >
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         <span
                           className={cn(
-                            "w-2 h-2 rounded-full",
+                            "w-2 h-2 rounded-full ring-2",
+                            role === r ? "ring-white/30" : "ring-transparent",
                             roleMeta[r].color
                           )}
                         />
                         <div>
-                          <div className="font-semibold">{roleMeta[r].label}</div>
-                          <div className={cn("text-[10px]", role === r ? "text-gray-300" : "text-gray-400")}>
+                          <div className="font-bold tracking-tight">{roleMeta[r].label}</div>
+                          <div className={cn("text-[10px] font-medium", role === r ? "text-gray-300" : "text-gray-400")}>
                             {roleMeta[r].subtext}
                           </div>
                         </div>
                       </div>
                       {role === r && (
-                        <span className="text-[10px] font-mono uppercase bg-white/20 px-1.5 py-0.5 rounded">
+                        <span className="text-[10px] font-mono uppercase bg-white/20 px-1.5 py-0.5 rounded font-bold">
                           {t.common.active}
                         </span>
                       )}
@@ -246,16 +247,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Mental Model Banner Tag */}
-        <div className="px-4 py-2 border-b border-gray-200/50 bg-gray-100/40">
-          <div className="text-[10px] font-mono text-gray-500 uppercase tracking-wider">
+        <div className="px-4 py-2 border-b border-gray-200/60 bg-gray-100/50">
+          <div className="text-[10px] font-mono font-semibold text-gray-500 uppercase tracking-wider">
             {roleMeta[role].flowText}
           </div>
         </div>
 
         {/* Nav Links */}
-        <nav className="flex-1 overflow-y-auto p-2.5 space-y-4">
+        <nav className="flex-1 overflow-y-auto p-3 space-y-4">
           {currentNavSections.map((section, idx) => (
-            <div key={idx} className="space-y-0.5">
+            <div key={idx} className="space-y-1">
               {section.title && (
                 <div className="px-3 pt-2 pb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400">
                   {section.title}
@@ -269,17 +270,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     key={item.path}
                     to={item.path}
                     className={cn(
-                      "flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-medium transition-all group",
+                      "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold tracking-tight transition-all duration-150 group active:scale-[0.99] relative",
                       isActive
-                        ? "bg-gray-900 text-white shadow-xs"
-                        : "text-gray-600 hover:text-gray-950 hover:bg-gray-200/60"
+                        ? "bg-white text-gray-950 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_1px_rgba(0,0,0,0.04)] border border-gray-200/90 font-bold"
+                        : "text-gray-600 hover:text-gray-950 hover:bg-gray-200/50"
                     )}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
                         className={cn(
                           "w-4 h-4 transition-colors",
-                          isActive ? "text-white" : "text-gray-400 group-hover:text-gray-700"
+                          isActive ? "text-gray-950" : "text-gray-400 group-hover:text-gray-700"
                         )}
                       />
                       <span>{item.name}</span>
@@ -287,10 +288,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     {item.badge && (
                       <span
                         className={cn(
-                          "text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider",
+                          "text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider",
                           isActive
-                            ? "bg-white/20 text-white"
-                            : "bg-gray-200 text-gray-700 group-hover:bg-gray-300"
+                            ? "bg-gray-900 text-white"
+                            : "bg-gray-200/80 text-gray-700 group-hover:bg-gray-300"
                         )}
                       >
                         {item.badge}
@@ -304,20 +305,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-3 border-t border-gray-200/80 bg-white/60 space-y-2">
+        <div className="p-3.5 border-t border-gray-200/80 bg-white/70 space-y-2.5">
           {/* Role Status Summary */}
-          <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-200/70 space-y-1">
-            <div className="text-[10px] font-mono font-semibold uppercase text-gray-400">
+          <div className="p-3 rounded-2xl bg-gray-50/90 border border-gray-200/80 space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+            <div className="text-[10px] font-mono font-bold uppercase text-gray-400 tracking-wider">
               {roleMeta[role].metricLabel}
             </div>
             <div className="flex items-baseline justify-between">
-              <span className="font-mono font-bold text-sm text-gray-950">
+              <span className="font-mono font-extrabold text-base text-gray-950 tabular-nums">
                 {roleMeta[role].metricValue}
               </span>
               {role === 'buyer' && (
                 <button
                   onClick={() => navigate('/buyer/billing')}
-                  className="text-[10px] font-bold text-blue-600 hover:text-blue-700 font-mono hover:underline"
+                  className="text-[11px] font-bold text-zinc-900 hover:text-zinc-600 font-mono hover:underline cursor-pointer"
                 >
                   + Top Up
                 </button>
@@ -328,12 +329,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between text-xs px-1 text-gray-500">
             <Link
               to="/home"
-              className="flex items-center gap-1 hover:text-gray-900 transition-colors text-[11px]"
+              className="flex items-center gap-1 hover:text-gray-900 transition-colors text-[11px] font-medium"
             >
               <Globe className="w-3.5 h-3.5" />
               <span>{t.common.publicPortal}</span>
             </Link>
-            <span className="text-[10px] font-mono text-emerald-600 flex items-center gap-1">
+            <span className="text-[10px] font-mono font-semibold text-emerald-600 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               {t.common.slaScore}
             </span>
@@ -342,13 +343,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main App Container */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#F9FAFB]">
-        {/* Top Header */}
-        <header className="h-14 bg-white border-b border-gray-200/90 px-6 flex items-center justify-between z-10 flex-shrink-0">
-          {/* Left: Global Search & Breadcrumb */}
+      <div className="flex-1 flex flex-col min-w-0 bg-[#F8F9FA]">
+        {/* Top Header with subtle frosted blur */}
+        <header className="h-14 bg-white/90 backdrop-blur-md border-b border-gray-200/80 px-6 sm:px-8 flex items-center justify-between z-10 flex-shrink-0">
+          {/* Left: Global Search */}
           <div className="flex items-center gap-4 flex-1 max-w-xl">
             <div className="relative w-full max-w-md">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 value={searchQuery}
@@ -360,7 +361,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     ? t.common.searchPlaceholderSupplier
                     : t.common.searchPlaceholderAdmin
                 }
-                className="w-full h-8 pl-8 pr-3 bg-gray-50 hover:bg-gray-100/80 focus:bg-white border border-gray-200/80 rounded-xl text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all font-sans"
+                className="w-full h-8.5 pl-9 pr-3.5 bg-gray-50/90 hover:bg-gray-100/70 focus:bg-white border border-gray-200/80 rounded-xl text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all font-sans font-medium shadow-[0_1px_2px_rgba(0,0,0,0.01)]"
               />
             </div>
           </div>
@@ -368,9 +369,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {/* Right Header Actions */}
           <div className="flex items-center gap-3">
             {/* Live Autopilot Status */}
-            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-gray-50 border border-gray-200/80 rounded-lg text-xs font-mono text-gray-700">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span className="text-[11px] font-semibold text-gray-800">{t.common.autopilotActive}</span>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-gray-50/90 border border-gray-200/80 rounded-full text-xs font-mono text-gray-700 shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />
+              <span className="text-[11px] font-bold text-gray-800">{t.common.autopilotActive}</span>
             </div>
 
             {/* Language Switcher Dropdown */}
@@ -383,7 +384,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 else if (role === 'supplier') navigate('/supplier/overview#attention');
                 else navigate('/admin/overview#attention');
               }}
-              className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              className="relative p-2 text-gray-500 hover:text-gray-950 hover:bg-gray-100/80 rounded-xl transition-all cursor-pointer"
               title={t.common.attentionNeeded}
             >
               <Bell className="w-4 h-4" />
@@ -392,24 +393,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
               )}
             </button>
 
-            <div className="h-4 w-px bg-gray-200 mx-1" />
+            <div className="h-4 w-px bg-gray-200 mx-0.5" />
 
             {/* Profile Avatar */}
-            <div className="flex items-center gap-2 pl-1">
-              <div className="w-7 h-7 rounded-full bg-gray-900 text-white font-mono font-bold text-xs flex items-center justify-center shadow-xs">
+            <div className="flex items-center gap-2.5 pl-1">
+              <div className="w-7.5 h-7.5 rounded-full bg-gradient-to-tr from-gray-900 to-gray-700 text-white font-mono font-bold text-xs flex items-center justify-center shadow-xs border border-gray-750">
                 {role === 'buyer' ? 'BY' : role === 'supplier' ? 'SP' : 'AD'}
               </div>
               <div className="hidden md:block text-left">
-                <div className="text-xs font-semibold text-gray-900 leading-none">burncloud.com</div>
-                <div className="text-[10px] font-mono text-gray-500 leading-tight capitalize">{roleMeta[role].label}</div>
+                <div className="text-xs font-bold text-gray-950 leading-none">burncloud.com</div>
+                <div className="text-[10px] font-mono text-gray-400 font-semibold leading-tight capitalize mt-0.5">{roleMeta[role].label}</div>
               </div>
             </div>
           </div>
         </header>
 
         {/* Page Content Viewport */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          <div className="max-w-7xl mx-auto space-y-6">
+        <main className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-10">
+          <div className="max-w-7xl mx-auto space-y-7">
             {children}
           </div>
         </main>

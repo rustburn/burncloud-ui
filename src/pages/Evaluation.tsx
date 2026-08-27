@@ -66,9 +66,9 @@ export function Evaluation() {
                     <td key={idx} className="px-6 py-5 text-center">
                       <div className="flex items-center justify-center">
                         <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[13px] font-medium tabular-nums ${
-                          score >= 95 ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-500/20' :
-                          score >= 90 ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-500/20' :
-                          score >= 85 ? 'bg-gray-50 text-gray-700 ring-1 ring-inset ring-gray-500/20' : 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-500/20'
+                          score >= 95 ? 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-500/20' :
+                          score >= 90 ? 'bg-zinc-100 text-zinc-900 ring-1 ring-inset ring-zinc-300' :
+                          score >= 85 ? 'bg-gray-50 text-gray-700 ring-1 ring-inset ring-gray-200' : 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-500/20'
                         }`}>
                           {score}
                         </div>

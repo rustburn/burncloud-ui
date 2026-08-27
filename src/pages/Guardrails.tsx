@@ -215,7 +215,7 @@ export function Guardrails() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-1 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-gray-900 group-hover:text-blue-600 transition-colors">{g.name}</span>
+                        <span className="font-semibold text-sm text-gray-900 group-hover:text-zinc-600 transition-colors">{g.name}</span>
                         <Badge variant={
                           g.category === 'Security' ? 'error' :
                           g.category === 'Privacy' ? 'brand' :

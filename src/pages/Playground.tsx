@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 const STRATEGIES = [
-  { id: 'balanced', name: 'Balanced Optimization', desc: 'Mixes intelligence, cost, and latency dynamically.', icon: Cpu, color: 'text-blue-500', bg: 'bg-blue-50' },
-  { id: 'speed', name: 'Extreme Speed', desc: 'Prioritizes lowest latency using fast responsive models.', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-50' },
-  { id: 'cost', name: 'Ultra Cost Saver', desc: 'Prioritizes lowest cost using open-source & budget models.', icon: Coins, color: 'text-green-500', bg: 'bg-green-50' },
-  { id: 'intelligence', name: 'Max Intelligence', desc: 'Prioritizes complex reasoning with state-of-the-art models.', icon: Sparkles, color: 'text-purple-500', bg: 'bg-purple-50' },
+  { id: 'balanced', name: 'Balanced Optimization', desc: 'Mixes intelligence, cost, and latency dynamically.', icon: Cpu, color: 'text-zinc-900', bg: 'bg-zinc-100' },
+  { id: 'speed', name: 'Extreme Speed', desc: 'Prioritizes lowest latency using fast responsive models.', icon: Zap, color: 'text-amber-600', bg: 'bg-amber-50' },
+  { id: 'cost', name: 'Ultra Cost Saver', desc: 'Prioritizes lowest cost using open-source & budget models.', icon: Coins, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { id: 'intelligence', name: 'Max Intelligence', desc: 'Prioritizes complex reasoning with state-of-the-art models.', icon: Sparkles, color: 'text-zinc-950', bg: 'bg-zinc-100' },
 ];
 
 export function Playground() {

@@ -33,7 +33,7 @@ export function SupplierOverview() {
   const degradedNode = MOCK_SUPPLIER_NODES.find(n => n.status === 'Degraded');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* 1. Page Header */}
       <BCPageHeader
         title={t.supplier.overview.title}
@@ -45,7 +45,7 @@ export function SupplierOverview() {
           type: degradedNode ? 'warning' : 'healthy'
         }}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <BCButton
               variant="secondary"
               size="sm"
@@ -55,7 +55,7 @@ export function SupplierOverview() {
               <span>{t.supplier.overview.inspectNodes}</span>
             </BCButton>
             <BCButton
-              variant="primary"
+              variant="brand"
               size="sm"
               onClick={() => setIsOnboardModalOpen(true)}
             >
@@ -67,7 +67,7 @@ export function SupplierOverview() {
       />
 
       {/* 2. Four Primary Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* 1: Today Earnings */}
         <BCMetric
           label={t.supplier.overview.todayEarnings}
@@ -106,14 +106,14 @@ export function SupplierOverview() {
 
       {/* 3. Needs Attention Banner */}
       {degradedNode && (
-        <div id="attention" className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
+        <div id="attention" className="p-5 rounded-2xl bg-amber-50/90 border border-amber-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div className="flex items-start gap-3.5">
             <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="text-sm font-bold text-amber-950">
                 {t.supplier.overview.attentionTitle} ({degradedNode.name})
               </h4>
-              <p className="text-xs text-amber-800 mt-0.5">
+              <p className="text-xs text-amber-800/90 mt-0.5 font-medium">
                 {t.supplier.overview.attentionDesc}
               </p>
             </div>
@@ -122,7 +122,7 @@ export function SupplierOverview() {
             variant="primary"
             size="sm"
             onClick={() => navigate('/supplier/resources')}
-            className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
+            className="flex-shrink-0 bg-amber-950 hover:bg-amber-900 border-amber-950"
           >
             <span>{t.supplier.overview.inspectNodes}</span>
           </BCButton>
@@ -130,11 +130,11 @@ export function SupplierOverview() {
       )}
 
       {/* 4. Active Hardware Nodes Table */}
-      <BCCard className="p-6 space-y-4">
+      <BCCard className="p-6 sm:p-7 space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-bold text-gray-950">{t.supplier.overview.connectedNodes}</h3>
-            <p className="text-xs text-gray-500">{t.supplier.overview.connectedNodesDesc}</p>
+            <p className="text-xs text-gray-500 font-medium mt-0.5">{t.supplier.overview.connectedNodesDesc}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -210,9 +210,9 @@ export function SupplierOverview() {
             </div>
           </div>
 
-          <div className="p-3 bg-blue-50/80 rounded-xl border border-blue-200/80 space-y-1 font-sans text-blue-900">
+          <div className="p-3.5 bg-zinc-50 rounded-xl border border-zinc-200/80 space-y-1 font-sans text-zinc-900">
             <div className="font-bold">{t.supplier.overview.verificationTitle}:</div>
-            <p className="text-[11px] leading-relaxed">
+            <p className="text-[11px] leading-relaxed text-zinc-600 font-medium">
               {t.supplier.overview.verificationDesc}
             </p>
           </div>

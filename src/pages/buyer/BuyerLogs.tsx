@@ -176,7 +176,7 @@ export function BuyerLogs() {
                   </td>
                   <td className="py-3 font-bold text-gray-950">${log.costUsd.toFixed(6)}</td>
                   <td className="py-3 text-right">
-                    <button className="text-blue-600 hover:underline text-xs font-sans font-medium cursor-pointer">
+                    <button className="text-zinc-900 hover:text-zinc-600 hover:underline text-xs font-sans font-semibold cursor-pointer">
                       {t.buyer.logs.colInspect} →
                     </button>
                   </td>

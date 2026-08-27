@@ -78,17 +78,17 @@ export function AdminCapacity() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">{t.admin.capacity.colModel}</th>
+              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] tracking-wider">
+                <th className="pb-3 font-semibold font-sans">{t.admin.capacity.colModel}</th>
                 <th className="pb-3 font-semibold">{t.admin.capacity.colProvisionedCapacity}</th>
                 <th className="pb-3 font-semibold">{t.admin.capacity.colActiveDemand}</th>
                 <th className="pb-3 font-semibold">{t.admin.capacity.colHeadroom}</th>
                 <th className="pb-3 font-semibold">{t.admin.capacity.colP95Latency}</th>
-                <th className="pb-3 font-semibold">{t.admin.capacity.colScalingAction}</th>
-                <th className="pb-3 font-semibold text-right">{t.admin.capacity.colStatus}</th>
+                <th className="pb-3 font-semibold font-sans">{t.admin.capacity.colScalingAction}</th>
+                <th className="pb-3 font-semibold text-right font-sans">{t.admin.capacity.colStatus}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 tabular-nums">
               {[
                 {
                   model: 'DeepSeek V3 (671B MoE)',
@@ -127,7 +127,7 @@ export function AdminCapacity() {
                   status: 'Degraded'
                 }
               ].map((item, idx) => (
-                <tr key={idx} className="hover:bg-gray-50/70">
+                <tr key={idx} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-bold font-sans text-gray-900">{item.model}</td>
                   <td className="py-3.5 text-gray-700">{item.provisioned}</td>
                   <td className="py-3.5 font-bold text-gray-950">{item.demand}</td>

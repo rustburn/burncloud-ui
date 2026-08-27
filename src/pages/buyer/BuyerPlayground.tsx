@@ -264,7 +264,7 @@ main();`;
               </div>
             </div>
 
-            <pre className="p-3 bg-gray-950 text-gray-100 rounded-xl text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed">
+            <pre className="p-3.5 bg-gray-900/95 text-gray-100 rounded-2xl text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed border border-gray-800/80 shadow-inner">
               {activeCodeTab === 'curl' && getCurlSnippet()}
               {activeCodeTab === 'python' && getPythonSnippet()}
               {activeCodeTab === 'node' && getNodeSnippet()}
@@ -333,7 +333,7 @@ main();`;
                 </BCButton>
 
                 <BCButton
-                  variant="primary"
+                  variant="brand"
                   size="md"
                   loading={isLoading}
                   onClick={handleRunInference}
@@ -352,8 +352,8 @@ main();`;
                     {t.buyer.playground.responseOutput}
                   </span>
                   {isLoading && (
-                    <span className="flex items-center gap-1.5 text-xs text-blue-600 font-mono font-medium">
-                      <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
+                    <span className="flex items-center gap-1.5 text-xs text-emerald-600 font-mono font-medium">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                       {t.buyer.playground.running}
                     </span>
                   )}

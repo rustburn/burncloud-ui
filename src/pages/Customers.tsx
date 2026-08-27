@@ -155,8 +155,8 @@ export function Customers() {
             <span className="text-[12px] font-semibold text-gray-400 uppercase tracking-wider">Total Demands</span>
             <p className="text-2xl font-bold text-gray-900">{(totalRequests / 1000000).toFixed(2)}M Req</p>
           </div>
-          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100">
-            <Activity className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center border border-zinc-200">
+            <Activity className="w-5 h-5 text-zinc-900" />
           </div>
         </Card>
 

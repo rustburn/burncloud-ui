@@ -69,16 +69,16 @@ export function SupplierEarnings() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
+              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] tracking-wider">
                 <th className="pb-3 font-semibold">{t.supplier.earnings.colNode}</th>
-                <th className="pb-3 font-semibold">GPU Hardware</th>
+                <th className="pb-3 font-semibold font-sans">GPU Hardware</th>
                 <th className="pb-3 font-semibold">{t.supplier.earnings.colModel}</th>
                 <th className="pb-3 font-semibold">{t.supplier.earnings.colTokens}</th>
                 <th className="pb-3 font-semibold">{t.supplier.earnings.colRevenueShare}</th>
                 <th className="pb-3 font-semibold text-right">{t.supplier.earnings.colNetEarnings}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 tabular-nums">
               {[
                 {
                   node: 'SJC-Pod-01-Rack4',
@@ -113,7 +113,7 @@ export function SupplierEarnings() {
                   accrual: '$18.20'
                 }
               ].map((item, idx) => (
-                <tr key={idx} className="hover:bg-gray-50/70">
+                <tr key={idx} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-bold text-gray-900 font-sans">{item.node}</td>
                   <td className="py-3.5 text-gray-700 font-sans">{item.hw}</td>
                   <td className="py-3.5 text-gray-700 font-sans">{item.model}</td>

@@ -138,8 +138,8 @@ export function Overview() {
             <p className="text-2xl font-bold text-gray-900 font-sans tracking-tight">12.8M</p>
             <span className="text-[11px] text-gray-400 block font-mono">Fully cloud attested</span>
           </div>
-          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100 shrink-0">
-            <Activity className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center border border-zinc-200 shrink-0">
+            <Activity className="w-5 h-5 text-zinc-900" />
           </div>
         </Card>
 
@@ -206,7 +206,7 @@ export function Overview() {
                     </span>
                   </div>
                   <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-blue-600 h-full rounded-full transition-all duration-500" style={{ width: '52%' }}></div>
+                    <div className="bg-zinc-950 h-full rounded-full transition-all duration-500" style={{ width: '52%' }}></div>
                   </div>
                 </div>
 
@@ -307,7 +307,7 @@ export function Overview() {
             <li key={index} className="flex items-center gap-3 group">
               <span className={cn(
                 "h-1.5 w-1.5 rounded-full shrink-0",
-                item.type === "success" ? "bg-green-500" : item.type === "warning" ? "bg-amber-500" : "bg-blue-500"
+                item.type === "success" ? "bg-emerald-500" : item.type === "warning" ? "bg-amber-500" : "bg-zinc-900"
               )}></span>
               <span className="group-hover:text-gray-950 transition-colors">
                 {item.text}
@@ -525,7 +525,7 @@ export function Overview() {
             
             <div className="p-4 bg-gray-50/50 rounded-xl border border-gray-200/50 space-y-2">
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center font-mono text-[11px] font-bold">1</span>
+                <span className="w-5 h-5 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-900 flex items-center justify-center font-mono text-[11px] font-bold">1</span>
                 <span className="text-xs font-bold text-gray-800 uppercase tracking-wider">Visual Gravity of Spacing</span>
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">

@@ -109,7 +109,7 @@ export function BuyerUsage() {
         <div className="pt-4 border-t border-gray-100 overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
+              <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px] tracking-wider">
                 <th className="pb-3 font-semibold">{t.buyer.usage.colModel}</th>
                 <th className="pb-3 font-semibold">{t.buyer.usage.colPromptTokens}</th>
                 <th className="pb-3 font-semibold">{t.buyer.usage.colCompletionTokens}</th>
@@ -118,8 +118,8 @@ export function BuyerUsage() {
                 <th className="pb-3 font-semibold text-right">{t.buyer.usage.colCost}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 font-mono">
-              <tr className="hover:bg-gray-50/70">
+            <tbody className="divide-y divide-gray-100 font-mono tabular-nums">
+              <tr className="hover:bg-gray-50/70 transition-colors">
                 <td className="py-3 font-sans font-semibold text-gray-900">DeepSeek V3 (Standard)</td>
                 <td className="py-3 text-gray-600">2,800,000</td>
                 <td className="py-3 text-gray-600">5,600,000</td>
@@ -127,7 +127,7 @@ export function BuyerUsage() {
                 <td className="py-3 text-gray-600">148 ms</td>
                 <td className="py-3 font-bold text-gray-950 text-right">$2.35</td>
               </tr>
-              <tr className="hover:bg-gray-50/70">
+              <tr className="hover:bg-gray-50/70 transition-colors">
                 <td className="py-3 font-sans font-semibold text-gray-900">DeepSeek R1 (Performance)</td>
                 <td className="py-3 text-gray-600">1,200,000</td>
                 <td className="py-3 text-gray-600">2,600,000</td>
@@ -135,7 +135,7 @@ export function BuyerUsage() {
                 <td className="py-3 text-gray-600">380 ms</td>
                 <td className="py-3 font-bold text-gray-950 text-right">$8.32</td>
               </tr>
-              <tr className="hover:bg-gray-50/70">
+              <tr className="hover:bg-gray-50/70 transition-colors">
                 <td className="py-3 font-sans font-semibold text-gray-900">Qwen 2.5 72B (Standard)</td>
                 <td className="py-3 text-gray-600">650,000</td>
                 <td className="py-3 text-gray-600">1,250,000</td>

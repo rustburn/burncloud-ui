@@ -122,7 +122,7 @@ export function Models() {
                         <p className="text-[12.5px] text-gray-400 mt-0.5">{model.provider}</p>
                       </div>
                     </div>
-                    <Badge variant="brand" className="bg-blue-50/50 text-blue-600 border-blue-100 font-medium">{model.quality} index</Badge>
+                    <Badge variant="brand" className="bg-zinc-100 text-zinc-900 border-zinc-200 font-semibold">{model.quality} index</Badge>
                   </div>
                   
                   <div className="flex flex-wrap gap-1.5 mb-6">
@@ -206,7 +206,7 @@ export function Models() {
               <div className="p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Quality Score</span>
-                  <Percent className="w-4 h-4 text-blue-500" />
+                  <Percent className="w-4 h-4 text-zinc-700" />
                 </div>
                 <div className="text-2xl font-bold text-gray-900">{selectedModel.quality}%</div>
                 <p className="text-[10px] text-gray-400 mt-1">Relative to GPT-4o base benchmarks.</p>
@@ -236,11 +236,11 @@ export function Models() {
                 </div>
                 <div className="flex items-center justify-between p-3.5 text-[13px]">
                   <span className="text-gray-500">Input Token Pricing</span>
-                  <span className="font-semibold text-gray-900 text-blue-600">${selectedModel.inputCost.toFixed(2)} per 1M</span>
+                  <span className="font-semibold text-gray-900 font-mono">${selectedModel.inputCost.toFixed(2)} per 1M</span>
                 </div>
                 <div className="flex items-center justify-between p-3.5 text-[13px]">
                   <span className="text-gray-500">Output Token Pricing</span>
-                  <span className="font-semibold text-gray-900 text-blue-600">${selectedModel.outputCost.toFixed(2)} per 1M</span>
+                  <span className="font-semibold text-gray-900 font-mono">${selectedModel.outputCost.toFixed(2)} per 1M</span>
                 </div>
               </div>
             </div>

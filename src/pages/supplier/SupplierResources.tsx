@@ -101,12 +101,12 @@ export function SupplierResources() {
             </div>
 
             {/* Assigned Workload */}
-            <div className="p-2.5 bg-blue-50/60 rounded-xl border border-blue-100 flex items-center justify-between text-xs">
+            <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-200/80 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-blue-700" />
-                <span className="text-blue-950 font-medium">{t.supplier.resources.assignedModel}: {node.assignedModel}</span>
+                <Cpu className="w-4 h-4 text-zinc-700" />
+                <span className="text-zinc-950 font-semibold">{t.supplier.resources.assignedModel}: {node.assignedModel}</span>
               </div>
-              <span className="text-[10px] font-mono text-blue-700">{t.supplier.resources.autopilotAssigned}</span>
+              <span className="text-[10px] font-mono text-zinc-500 font-semibold uppercase tracking-wider">{t.supplier.resources.autopilotAssigned}</span>
             </div>
 
             {/* Bottom Actions */}

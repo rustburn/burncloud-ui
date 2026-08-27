@@ -30,7 +30,7 @@ export function BuyerOverview() {
   const isLowBalance = balance < 20;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* 1. Page Header & Intelligent Conclusion */}
       <BCPageHeader
         title={t.buyer.overview.title}
@@ -42,7 +42,7 @@ export function BuyerOverview() {
           type: isLowBalance ? 'warning' : 'healthy'
         }}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <BCButton
               variant="secondary"
               size="sm"
@@ -52,7 +52,7 @@ export function BuyerOverview() {
               <span>{t.buyer.overview.openPlayground}</span>
             </BCButton>
             <BCButton
-              variant="primary"
+              variant="brand"
               size="sm"
               onClick={() => navigate('/buyer/marketplace')}
             >
@@ -64,7 +64,7 @@ export function BuyerOverview() {
       />
 
       {/* 2. Four Primary Metrics (Fixed Order per Contract) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* 1: Today Spend */}
         <BCMetric
           label={t.buyer.overview.metricTodaySpend}
@@ -109,12 +109,12 @@ export function BuyerOverview() {
 
       {/* 3. Needs Attention (Only shown when action is required) */}
       {isLowBalance && (
-        <div id="attention" className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
+        <div id="attention" className="p-5 rounded-2xl bg-amber-50/90 border border-amber-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div className="flex items-start gap-3.5">
             <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="text-sm font-bold text-amber-950">{t.buyer.overview.attentionTitle}</h4>
-              <p className="text-xs text-amber-800 mt-0.5">
+              <p className="text-xs text-amber-800/90 mt-0.5 font-medium">
                 {t.buyer.overview.attentionDesc}
               </p>
             </div>
@@ -123,7 +123,7 @@ export function BuyerOverview() {
             variant="primary"
             size="sm"
             onClick={() => navigate('/buyer/billing')}
-            className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
+            className="flex-shrink-0 bg-amber-950 hover:bg-amber-900 border-amber-950"
           >
             <CreditCard className="w-3.5 h-3.5" />
             <span>{t.buyer.overview.attentionTopUpBtn}</span>
@@ -132,17 +132,17 @@ export function BuyerOverview() {
       )}
 
       {/* 4. Main Section: Models in Use */}
-      <BCCard className="p-6 space-y-4">
+      <BCCard className="p-6 sm:p-7 space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-bold text-gray-950">{t.buyer.overview.modelsInUseTitle}</h3>
-            <p className="text-xs text-gray-500">{t.buyer.overview.modelsInUseDesc}</p>
+            <p className="text-xs text-gray-500 font-medium mt-0.5">{t.buyer.overview.modelsInUseDesc}</p>
           </div>
           <BCButton
             variant="ghost"
             size="sm"
             onClick={() => navigate('/buyer/marketplace')}
-            className="text-xs"
+            className="text-xs font-semibold"
           >
             <span>{t.buyer.overview.exploreAllModels}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -152,14 +152,14 @@ export function BuyerOverview() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px]">
-                <th className="pb-3 font-semibold">{t.buyer.overview.colModel}</th>
-                <th className="pb-3 font-semibold">{t.buyer.overview.colSelectedTier}</th>
-                <th className="pb-3 font-semibold">{t.buyer.overview.colTodayTokens}</th>
-                <th className="pb-3 font-semibold">{t.buyer.overview.colP95Latency}</th>
-                <th className="pb-3 font-semibold">{t.buyer.overview.colTodayCost}</th>
-                <th className="pb-3 font-semibold">{t.buyer.overview.colServiceStatus}</th>
-                <th className="pb-3 font-semibold text-right">{t.buyer.overview.colAction}</th>
+              <tr className="border-b border-gray-100 text-gray-400 font-mono uppercase text-[10px] tracking-wider">
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colModel}</th>
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colSelectedTier}</th>
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colTodayTokens}</th>
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colP95Latency}</th>
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colTodayCost}</th>
+                <th className="pb-3.5 font-semibold">{t.buyer.overview.colServiceStatus}</th>
+                <th className="pb-3.5 font-semibold text-right">{t.buyer.overview.colAction}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -189,33 +189,33 @@ export function BuyerOverview() {
                   status: 'Healthy'
                 }
               ].map((item, idx) => (
-                <tr key={idx} className="hover:bg-gray-50/70 transition-colors">
-                  <td className="py-3.5 font-medium text-gray-950">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center font-mono font-bold text-[10px] text-gray-700">
+                <tr key={idx} className="hover:bg-gray-50/80 transition-colors">
+                  <td className="py-4 font-medium text-gray-950">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-6.5 h-6.5 rounded-xl bg-gray-100 border border-gray-200/80 flex items-center justify-center font-mono font-bold text-[10px] text-gray-700 shadow-2xs">
                         {item.model.name[0]}
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900">{item.model.name}</div>
-                        <div className="text-[10px] font-mono text-gray-500">{item.model.family}</div>
+                        <div className="font-bold text-gray-950">{item.model.name}</div>
+                        <div className="text-[10px] font-mono text-gray-400 font-semibold">{item.model.family}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3.5">
+                  <td className="py-4">
                     <BCBadge variant={item.tier === 'Performance' ? 'accent' : 'neutral'} size="sm">
                       {item.tier}
                     </BCBadge>
                   </td>
-                  <td className="py-3.5 font-mono text-gray-700 font-medium">{item.tokens}</td>
-                  <td className="py-3.5 font-mono text-gray-700">{item.p95}</td>
-                  <td className="py-3.5 font-mono font-semibold text-gray-950">{item.cost}</td>
-                  <td className="py-3.5">
+                  <td className="py-4 font-mono text-gray-700 font-semibold tabular-nums">{item.tokens}</td>
+                  <td className="py-4 font-mono text-gray-700 tabular-nums">{item.p95}</td>
+                  <td className="py-4 font-mono font-bold text-gray-950 tabular-nums">{item.cost}</td>
+                  <td className="py-4">
                     <BCStatus status={item.status} />
                   </td>
-                  <td className="py-3.5 text-right">
+                  <td className="py-4 text-right">
                     <button
                       onClick={() => navigate('/buyer/playground')}
-                      className="text-blue-600 hover:text-blue-800 font-semibold font-mono text-xs hover:underline cursor-pointer"
+                      className="text-zinc-900 hover:text-zinc-600 font-bold font-mono text-xs hover:underline cursor-pointer"
                     >
                       {t.buyer.overview.testInPlayground}
                     </button>
@@ -228,17 +228,17 @@ export function BuyerOverview() {
       </BCCard>
 
       {/* 5. Recent Activity Stream */}
-      <BCCard className="p-6 space-y-4">
+      <BCCard className="p-6 sm:p-7 space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-bold text-gray-950">{t.buyer.overview.recentActivityTitle}</h3>
-            <p className="text-xs text-gray-500">{t.buyer.overview.recentActivityDesc}</p>
+            <p className="text-xs text-gray-500 font-medium mt-0.5">{t.buyer.overview.recentActivityDesc}</p>
           </div>
           <BCButton
             variant="ghost"
             size="sm"
             onClick={() => navigate('/buyer/logs')}
-            className="text-xs"
+            className="text-xs font-semibold"
           >
             <span>{t.buyer.overview.viewFullLogs}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -266,17 +266,17 @@ export function BuyerOverview() {
               desc: 'Associated with Standard & Performance tiers.'
             }
           ].map((event, idx) => (
-            <div key={idx} className="p-3.5 rounded-xl bg-gray-50/80 border border-gray-100 flex items-start justify-between gap-4">
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 flex-shrink-0 mt-0.5 shadow-xs">
-                  {event.type === 'Recharge' ? <DollarSign className="w-3.5 h-3.5 text-emerald-600" /> : event.type === 'Autopilot' ? <Zap className="w-3.5 h-3.5 text-blue-600" /> : <Key className="w-3.5 h-3.5 text-gray-600" />}
+            <div key={idx} className="p-4 rounded-2xl bg-gray-50/80 border border-gray-100 flex items-start justify-between gap-4 hover:border-gray-200/90 transition-colors">
+              <div className="flex items-start gap-3.5">
+                <div className="w-7.5 h-7.5 rounded-xl bg-white border border-gray-200/90 flex items-center justify-center text-gray-700 flex-shrink-0 mt-0.5 shadow-2xs">
+                  {event.type === 'Recharge' ? <DollarSign className="w-3.5 h-3.5 text-emerald-600" /> : event.type === 'Autopilot' ? <Zap className="w-3.5 h-3.5 text-amber-500" /> : <Key className="w-3.5 h-3.5 text-gray-600" />}
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900 text-xs">{event.title}</div>
-                  <div className="text-[11px] text-gray-500 mt-0.5">{event.desc}</div>
+                  <div className="font-bold text-gray-950 text-xs">{event.title}</div>
+                  <div className="text-[11px] text-gray-500 mt-0.5 font-medium">{event.desc}</div>
                 </div>
               </div>
-              <span className="text-[10px] font-mono text-gray-400 whitespace-nowrap">{event.time}</span>
+              <span className="text-[10px] font-mono text-gray-400 font-medium whitespace-nowrap">{event.time}</span>
             </div>
           ))}
         </div>

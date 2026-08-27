@@ -26,7 +26,7 @@ export function AdminOverview() {
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* 1. Page Header */}
       <BCPageHeader
         title={t.admin.overview.title}
@@ -36,7 +36,7 @@ export function AdminOverview() {
           type: 'healthy'
         }}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <BCButton
               variant="secondary"
               size="sm"
@@ -46,7 +46,7 @@ export function AdminOverview() {
               <span>{t.admin.overview.actionAutopilotCenter}</span>
             </BCButton>
             <BCButton
-              variant="primary"
+              variant="brand"
               size="sm"
               onClick={() => navigate('/admin/capacity')}
             >
@@ -58,7 +58,7 @@ export function AdminOverview() {
       />
 
       {/* 2. Four Primary Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* 1: Today Revenue */}
         <BCMetric
           label={t.admin.overview.metricPlatformGmv}
@@ -96,12 +96,12 @@ export function AdminOverview() {
       </div>
 
       {/* 3. Needs Attention / Capacity Risk Banner */}
-      <div id="attention" className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
+      <div id="attention" className="p-5 rounded-2xl bg-amber-50/90 border border-amber-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+        <div className="flex items-start gap-3.5">
           <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-bold text-amber-950">{t.admin.overview.capacityWarningTitle}</h4>
-            <p className="text-xs text-amber-800 mt-0.5">
+            <p className="text-xs text-amber-800/90 mt-0.5 font-medium">
               {t.admin.overview.capacityWarningDesc}
             </p>
           </div>
@@ -110,18 +110,18 @@ export function AdminOverview() {
           variant="primary"
           size="sm"
           onClick={() => navigate('/admin/capacity')}
-          className="flex-shrink-0 bg-amber-900 hover:bg-amber-800 border-amber-900"
+          className="flex-shrink-0 bg-amber-950 hover:bg-amber-900 border-amber-950"
         >
           <span>{t.admin.overview.actionAdjustPolicy}</span>
         </BCButton>
       </div>
 
       {/* 4. Real-time Autopilot Autonomous Actions Feed */}
-      <BCCard className="p-6 space-y-4">
+      <BCCard className="p-6 sm:p-7 space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-bold text-gray-950">{t.admin.overview.autopilotActionsTitle}</h3>
-            <p className="text-xs text-gray-500">{t.admin.overview.autopilotActionsSubtitle}</p>
+            <p className="text-xs text-gray-500 font-medium mt-0.5">{t.admin.overview.autopilotActionsSubtitle}</p>
           </div>
           <BCButton
             variant="ghost"
@@ -171,7 +171,7 @@ export function AdminOverview() {
             </h3>
             <button
               onClick={() => navigate('/admin/supply')}
-              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
+              className="text-xs font-semibold text-zinc-900 hover:text-zinc-600 hover:underline cursor-pointer"
             >
               {t.admin.overview.viewSupplyFleets} →
             </button>
@@ -202,7 +202,7 @@ export function AdminOverview() {
             </h3>
             <button
               onClick={() => navigate('/admin/demand')}
-              className="text-xs font-semibold text-blue-600 hover:underline cursor-pointer"
+              className="text-xs font-semibold text-zinc-900 hover:text-zinc-600 hover:underline cursor-pointer"
             >
               {t.admin.overview.viewVelocity} →
             </button>

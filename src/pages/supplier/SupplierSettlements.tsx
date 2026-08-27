@@ -110,17 +110,17 @@ export function SupplierSettlements() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
+              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] tracking-wider">
                 <th className="pb-3 font-semibold">{t.supplier.settlements.colBatch}</th>
                 <th className="pb-3 font-semibold">{t.supplier.settlements.colDate}</th>
-                <th className="pb-3 font-semibold">{t.supplier.settlements.colDestination}</th>
+                <th className="pb-3 font-semibold font-sans">{t.supplier.settlements.colDestination}</th>
                 <th className="pb-3 font-semibold">{t.supplier.settlements.colTokens}</th>
                 <th className="pb-3 font-semibold">{t.supplier.settlements.colNetPayout}</th>
-                <th className="pb-3 font-semibold">{t.supplier.settlements.colStatus}</th>
-                <th className="pb-3 font-semibold text-right">{t.supplier.settlements.colStatement}</th>
+                <th className="pb-3 font-semibold font-sans">{t.supplier.settlements.colStatus}</th>
+                <th className="pb-3 font-semibold text-right font-sans">{t.supplier.settlements.colStatement}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 tabular-nums">
               {[
                 {
                   id: 'SET-2026-0815',
@@ -147,7 +147,7 @@ export function SupplierSettlements() {
                   status: 'Completed'
                 }
               ].map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50/70">
+                <tr key={item.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-bold text-gray-900">{item.id}</td>
                   <td className="py-3.5 text-gray-600">{item.date}</td>
                   <td className="py-3.5 text-gray-700 font-sans">{item.dest}</td>
@@ -156,10 +156,10 @@ export function SupplierSettlements() {
                   <td className="py-3.5 font-sans">
                     <BCBadge variant="success" size="sm">{item.status}</BCBadge>
                   </td>
-                  <td className="py-3.5 text-right">
+                  <td className="py-3.5 text-right font-sans">
                     <button
                       onClick={() => alert(`Downloading statement ${item.id}`)}
-                      className="text-blue-600 hover:text-blue-800 font-sans font-medium hover:underline flex items-center gap-1 ml-auto cursor-pointer"
+                      className="text-zinc-900 hover:text-zinc-600 font-semibold hover:underline flex items-center gap-1 ml-auto cursor-pointer"
                     >
                       <Download className="w-3 h-3" />
                       <span>PDF</span>

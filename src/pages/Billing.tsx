@@ -122,8 +122,8 @@ export function Billing() {
             <span className="text-[12px] font-semibold text-gray-400 uppercase tracking-wider">Token Cost / 1M</span>
             <p className="text-2xl font-bold text-gray-900">$1.24</p>
           </div>
-          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 bg-zinc-100 rounded-xl flex items-center justify-center border border-zinc-200">
+            <TrendingUp className="w-5 h-5 text-zinc-900" />
           </div>
         </Card>
 

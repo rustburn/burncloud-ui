@@ -61,17 +61,17 @@ export function AdminSupply() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
+              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] tracking-wider">
                 <th className="pb-3 font-semibold">{t.admin.supply.colCluster}</th>
-                <th className="pb-3 font-semibold">{t.admin.supply.colSourceType}</th>
+                <th className="pb-3 font-semibold font-sans">{t.admin.supply.colSourceType}</th>
                 <th className="pb-3 font-semibold">{t.admin.supply.colGpuConfig}</th>
                 <th className="pb-3 font-semibold">{t.admin.supply.colRegion}</th>
                 <th className="pb-3 font-semibold">{t.admin.supply.colUtilization}</th>
                 <th className="pb-3 font-semibold">{t.admin.supply.colAttestation}</th>
-                <th className="pb-3 font-semibold text-right">{t.admin.supply.colStatus}</th>
+                <th className="pb-3 font-semibold text-right font-sans">{t.admin.supply.colStatus}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 tabular-nums">
               {[
                 {
                   id: 'cls_sjc_core_01',
@@ -114,7 +114,7 @@ export function AdminSupply() {
                   status: 'Online'
                 }
               ].map((c) => (
-                <tr key={c.id} className="hover:bg-gray-50/70">
+                <tr key={c.id} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-sans font-bold text-gray-900">{c.name}</td>
                   <td className="py-3.5 font-sans text-gray-700 font-medium">{c.source}</td>
                   <td className="py-3.5 text-gray-700">{c.hw}</td>

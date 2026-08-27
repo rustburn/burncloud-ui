@@ -105,26 +105,26 @@ export function Logs() {
                   <p className="text-xs text-gray-500 mt-1">{selectedLog.timestamp}</p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-blue-400 ring-4 ring-white"></div>
+                  <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-zinc-900 ring-4 ring-white"></div>
                   <p className="text-sm text-gray-900">Matched route: <span className="font-medium">{selectedLog.route}</span></p>
                 </div>
                 <div className="relative">
-                  <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-blue-400 ring-4 ring-white"></div>
+                  <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-zinc-900 ring-4 ring-white"></div>
                   <p className="text-sm text-gray-900">Selected primary model: <span className="font-medium">{selectedLog.status === 'Fallback' || selectedLog.status === 'Timeout' ? 'claude-fable-5' : selectedLog.model}</span></p>
                 </div>
                 
                 {selectedLog.status === 'Timeout' && (
                   <>
                     <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-red-400 ring-4 ring-white"></div>
-                      <p className="text-sm text-red-600 font-medium">Timeout after 10s</p>
+                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-4 ring-white"></div>
+                      <p className="text-sm text-rose-600 font-medium">Timeout after 10s</p>
                     </div>
                     <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-yellow-400 ring-4 ring-white"></div>
+                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-4 ring-white"></div>
                       <p className="text-sm text-gray-900">Triggered fallback condition: <span className="font-mono text-xs">Timeout {">"} 8s</span></p>
                     </div>
                     <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-blue-400 ring-4 ring-white"></div>
+                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-zinc-900 ring-4 ring-white"></div>
                       <p className="text-sm text-gray-900">Retried with <span className="font-medium">{selectedLog.fallbackTo}</span></p>
                     </div>
                   </>
@@ -133,11 +133,11 @@ export function Logs() {
                 {selectedLog.status === 'Fallback' && (
                   <>
                     <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-yellow-400 ring-4 ring-white"></div>
-                      <p className="text-sm text-yellow-700 font-medium">Provider error rate exceeded threshold</p>
+                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-4 ring-white"></div>
+                      <p className="text-sm text-amber-700 font-medium">Provider error rate exceeded threshold</p>
                     </div>
                     <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-blue-400 ring-4 ring-white"></div>
+                      <div className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-zinc-900 ring-4 ring-white"></div>
                       <p className="text-sm text-gray-900">Falling back to <span className="font-medium">{selectedLog.fallbackTo}</span></p>
                     </div>
                   </>

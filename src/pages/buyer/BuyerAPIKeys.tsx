@@ -70,7 +70,7 @@ export function BuyerAPIKeys() {
         }}
         actions={
           <BCButton
-            variant="primary"
+            variant="brand"
             size="sm"
             onClick={() => setIsCreateModalOpen(true)}
           >

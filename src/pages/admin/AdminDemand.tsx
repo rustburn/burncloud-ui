@@ -61,8 +61,8 @@ export function AdminDemand() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px]">
-                <th className="pb-3 font-semibold">{t.admin.demand.colTenant}</th>
+              <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] tracking-wider">
+                <th className="pb-3 font-semibold font-sans">{t.admin.demand.colTenant}</th>
                 <th className="pb-3 font-semibold">{t.admin.demand.colTierPref}</th>
                 <th className="pb-3 font-semibold">{t.admin.demand.colTokens24h}</th>
                 <th className="pb-3 font-semibold">{t.admin.demand.colSpend24h}</th>
@@ -70,7 +70,7 @@ export function AdminDemand() {
                 <th className="pb-3 font-semibold text-right">{t.admin.demand.colCreditBalance}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 tabular-nums">
               {[
                 {
                   name: 'HyperScale AI Labs (US-West)',
@@ -97,9 +97,9 @@ export function AdminDemand() {
                   balance: '$12,850.00'
                 }
               ].map((tenant, idx) => (
-                <tr key={idx} className="hover:bg-gray-50/70">
+                <tr key={idx} className="hover:bg-gray-50/70 transition-colors">
                   <td className="py-3.5 font-sans font-bold text-gray-900">{tenant.name}</td>
-                  <td className="py-3.5">
+                  <td className="py-3.5 font-sans">
                     <BCBadge variant={tenant.tier.includes('Performance') ? 'accent' : 'neutral'} size="sm">
                       {tenant.tier}
                     </BCBadge>
