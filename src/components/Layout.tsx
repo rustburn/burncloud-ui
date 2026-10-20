@@ -70,7 +70,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [quickTopUpOpen, setQuickTopUpOpen] = useState(false);
 
-  const isPublicPage = ['/home', '/landing', '/login', '/register'].includes(location.pathname);
+  const isPublicPage = ['/', '/home', '/landing', '/login', '/register'].includes(location.pathname);
 
   if (isPublicPage) {
     return <>{children}</>;
@@ -334,10 +334,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Globe className="w-3.5 h-3.5" />
               <span>{t.common.publicPortal}</span>
             </Link>
-            <span className="text-[10px] font-mono font-semibold text-emerald-600 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              {t.common.slaScore}
-            </span>
+            <span className="text-[11px] font-mono text-gray-400">v1.2.0</span>
           </div>
         </div>
       </aside>

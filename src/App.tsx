@@ -64,12 +64,14 @@ export default function App() {
         <RoleProvider>
           <Layout>
             <RouterRoutes>
-              {/* Dynamic Root Route */}
-              <Route path="/" element={<DynamicRoot />} />
-
-              {/* Public Pages */}
+              {/* Default Root Route: Ollama-style Home */}
+              <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/landing" element={<Home />} />
+
+              {/* Dynamic Console / Dashboard Route */}
+              <Route path="/console" element={<DynamicRoot />} />
+              <Route path="/dashboard" element={<DynamicRoot />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
