@@ -11,13 +11,16 @@ import { cn } from '@/lib/utils';
 
 interface LanguageSwitcherProps {
   variant?: 'navbar' | 'compact' | 'footer' | 'pill';
+  dropDirection?: 'up' | 'down';
   className?: string;
 }
 
-export function LanguageSwitcher({ variant = 'navbar', className }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ variant = 'navbar', dropDirection, className }: LanguageSwitcherProps) {
   const { language, setLanguage, currentLangInfo, availableLanguages, t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const direction = dropDirection || (variant === 'footer' ? 'up' : 'down');
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -91,7 +94,12 @@ export function LanguageSwitcher({ variant = 'navbar', className }: LanguageSwit
       {isOpen && (
         <div
           id="language-dropdown-menu"
-          className="absolute right-0 mt-1.5 w-44 rounded-xl bg-white p-1.5 shadow-xl ring-1 ring-black/5 border border-gray-200/90 z-50 animate-in fade-in-0 zoom-in-95 duration-100"
+          className={cn(
+            "absolute right-0 w-44 rounded-xl bg-white p-1.5 shadow-xl ring-1 ring-black/5 border border-gray-200/90 z-50 animate-in fade-in-0 zoom-in-95 duration-100",
+            direction === 'up'
+              ? "bottom-full mb-1.5 slide-in-from-bottom-2"
+              : "top-full mt-1.5 slide-in-from-top-2"
+          )}
         >
           <div className="px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100 mb-1">
             {t.common.selectLanguage}

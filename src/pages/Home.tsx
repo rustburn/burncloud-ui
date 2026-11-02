@@ -500,10 +500,10 @@ To provision production keys or deploy your own node, click **"Open Console"** i
             </div>
 
             {/* Sidebar Bottom: Language & Version */}
-            <div className="p-3 border-t border-gray-200/80 bg-white/60">
+            <div className="p-3 border-t border-gray-200/80 bg-white/60 relative z-20">
               <div className="flex items-center justify-between px-1 text-xs text-gray-500">
                 <span className="text-[11px] font-mono text-gray-400">BurnCloud v2.4</span>
-                <LanguageSwitcher variant="footer" />
+                <LanguageSwitcher variant="footer" dropDirection="up" />
               </div>
             </div>
           </motion.aside>
